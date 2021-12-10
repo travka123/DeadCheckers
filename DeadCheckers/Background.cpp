@@ -7,6 +7,6 @@ Background::Background()
 	RegisterRenderable(RenderLayer::background);
 }
 
-void Background::Render(Painter* canvas) {
-	canvas->Paint(Texture::background, canvas->GetCanvasRect());
+void Background::Render(Painter& painter) {
+	painter.Paint(Texture::background, painter.GetCanvasRect());
 }

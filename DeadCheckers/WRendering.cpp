@@ -2,6 +2,11 @@
 
 #include "WPainter.h"
 
+WRendering::WRendering(std::wstring path)
+{
+	_textures = WTextureSet::LoadFrom(path);
+}
+
 void WRendering::Render(HWND hWnd) {
 	PAINTSTRUCT ps;
 
@@ -10,11 +15,11 @@ void WRendering::Render(HWND hWnd) {
 	RECT clientRect;
 	GetClientRect(hWnd, &clientRect);
 
-	WPainter canvas(ps.hdc, clientRect, _textures);
+	WPainter painter(ps.hdc, clientRect, _textures);
 
 	for (int i = 0; i < renderLayersCount; i++) {
 		for (IRenderable* entity : _entities[i]) {
-			entity->Render(&canvas);
+			entity->Render(painter);
 		}
 	}
 

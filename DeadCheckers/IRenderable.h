@@ -7,5 +7,5 @@ class IRenderable {
 protected:
 	void RegisterRenderable(RenderLayer layer);
 public:
-	virtual void Render(Painter* canvas) = 0;
+	virtual void Render(Painter& painter) = 0;
 };

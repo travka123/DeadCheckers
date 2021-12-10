@@ -5,5 +5,5 @@
 class Background : public IRenderable {
 public:
 	Background();
-	void Render(Painter* canvas);
+	void Render(Painter& canvas);
 };

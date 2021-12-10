@@ -4,15 +4,20 @@
 #include "WorldEntity.h"
 #include "WRendering.h"
 
-WRendering rendering;
+WRendering rendering(L"Media\\Textures\\Standart");
 
 void OnCreate()
 {
     Systems::SetRendering(&rendering);
 
-    rendering.SetTextures(L"Media\\Textures\\Standart");
-
     WorldEntity::SetBackground(new Background());
+    WorldEntity::SetCheckersField(new CheckersField(new Indexes()));
+}
+
+void OnSize(HWND hWnd) {
+    RECT rect;
+    GetClientRect(hWnd, &rect);
+    InvalidateRect(hWnd, &rect, FALSE);
 }
 
 extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -28,6 +33,10 @@ extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 
     case WM_DESTROY:
         PostQuitMessage(0);
+        break;
+
+    case WM_SIZE:
+        OnSize(hWnd);
         break;
 
     default:
