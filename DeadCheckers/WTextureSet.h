@@ -5,7 +5,7 @@
 #include <Windows.h>
 #include <string>
 
-#include "Textures.h"
+#include "Texture.h"
 
 class WTextureSet {
 private:

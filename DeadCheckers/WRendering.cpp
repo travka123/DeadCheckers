@@ -1,31 +1,30 @@
 #include "WRendering.h"
-
 #include "WPainter.h"
+#include "RenderLayer.h"
 
-WRendering::WRendering(std::wstring path)
-{
-	_textures = WTextureSet::LoadFrom(path);
+WRendering::WRendering(RECT clientRect, float margin, float menuWidth, std::wstring texturesPath) {
+    _textures = WTextureSet::LoadFrom(texturesPath);
+    _clientRect = clientRect;
+    _layout = Layout::GetLayout(clientRect, margin, menuWidth);
 }
 
-void WRendering::Render(HWND hWnd) {
-	PAINTSTRUCT ps;
+void WRendering::Render(HDC hDC) {
 
-	BeginPaint(hWnd, &ps);
+    WPainter painter(hDC, _clientRect, _textures, _layout);
 
-	RECT clientRect;
-	GetClientRect(hWnd, &clientRect);
-
-	WPainter painter(ps.hdc, clientRect, _textures);
-
-	for (int i = 0; i < renderLayersCount; i++) {
-		for (IRenderable* entity : _entities[i]) {
-			entity->Render(painter);
-		}
-	}
-
-	EndPaint(hWnd, &ps);
+    for (int i = 0; i < static_cast<int>(RenderLayer::LAYERS_COUNT); i++) {
+        for (Renderable* entity : _layers[i]) {
+            entity->Render(painter);
+        }
+    }
 }
 
 void WRendering::SetTextures(std::wstring path) {
-	_textures = WTextureSet::LoadFrom(path);
+    _textures = WTextureSet::LoadFrom(path);
+}
+
+void WRendering::SetCleintRect(RECT clientRect)
+{
+    _clientRect = clientRect;
+    _layout = Layout::GetLayout(clientRect, _layout.margin, _layout.menuWidth);
 }

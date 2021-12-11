@@ -1,12 +1,10 @@
 #pragma once
 
 #include "Renderable.h"
-
 #include "Painter.h"
 
-
-class Background : Renderable {
+class CellIndexes : Renderable {
 public:
-    Background();
+    CellIndexes();
     void Render(Painter& painter);
 };

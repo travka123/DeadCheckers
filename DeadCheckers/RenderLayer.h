@@ -7,4 +7,6 @@ enum class RenderLayer : int {
 	middle,
 	above_middle,
 	very_top,
+
+	LAYERS_COUNT
 };

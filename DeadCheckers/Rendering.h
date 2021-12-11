@@ -1,17 +1,14 @@
 #pragma once
 
 #include <vector>
-
-#include "IRenderable.h"
-
-const int renderLayersCount = 6;
+#include "Renderable.h"
+#include "RenderLayer.h"
 
 class Rendering {
-
 protected:
-	std::vector<IRenderable*> _entities[renderLayersCount];
+    std::vector<Renderable*> _layers[static_cast<int>(RenderLayer::LAYERS_COUNT)];
 
 public:
-	void RegisterEntity(IRenderable* entity, RenderLayer layer);
-	void UnregisterEntity(IRenderable* entity);
+    void RegisterEntity(Renderable* entity, RenderLayer layer);
+    void UnregisterEntity(Renderable* entity);
 };

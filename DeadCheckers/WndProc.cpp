@@ -1,23 +1,36 @@
 #include <Windows.h>
 
 #include "Systems.h"
-#include "WorldEntity.h"
 #include "WRendering.h"
+#include "Background.h"
+#include "CellIndexes.h"
+#include "Board.h"
 
-WRendering rendering(L"Media\\Textures\\Standart");
+extern RECT WndRect;
+
+WRendering rendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
 
 void OnCreate()
 {
     Systems::SetRendering(&rendering);
 
-    WorldEntity::SetBackground(new Background());
-    WorldEntity::SetCheckersField(new CheckersField(new Indexes()));
+    new Background();
+    new Board();
+    new CellIndexes();
 }
 
 void OnSize(HWND hWnd) {
     RECT rect;
     GetClientRect(hWnd, &rect);
+    rendering.SetCleintRect(rect);
     InvalidateRect(hWnd, &rect, FALSE);
+}
+
+void OnPaint(HWND hWnd) {
+    PAINTSTRUCT ps;
+    BeginPaint(hWnd, &ps);
+    rendering.Render(ps.hdc);
+    EndPaint(hWnd, &ps);
 }
 
 extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -28,7 +41,7 @@ extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         break;
 
     case WM_PAINT:
-        rendering.Render(hWnd);
+        OnPaint(hWnd);
         break;
 
     case WM_DESTROY:

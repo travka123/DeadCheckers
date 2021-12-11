@@ -2,12 +2,11 @@
 
 #include "Rendering.h"
 
-class Systems 
-{
+class Systems {
 private:
 	static Rendering* _rendering;
 
 public:
-	static void SetRendering(Rendering* rendering);
 	static Rendering* GetRendering();
+	static void SetRendering(Rendering* rendering);
 };

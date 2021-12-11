@@ -1,12 +1,10 @@
 #pragma once
 
 #include "Renderable.h"
-
 #include "Painter.h"
 
-
-class Background : Renderable {
+class Board : Renderable {
 public:
-    Background();
+    Board();
     void Render(Painter& painter);
 };

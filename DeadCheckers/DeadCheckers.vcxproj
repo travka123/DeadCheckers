@@ -140,33 +140,30 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Background.cpp" />
-    <ClCompile Include="CheckersField.cpp" />
+    <ClCompile Include="Board.cpp" />
+    <ClCompile Include="CellIndexes.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
-    <ClCompile Include="Indexes.cpp" />
-    <ClCompile Include="IRenderable.cpp" />
+    <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="Systems.cpp" />
-    <ClCompile Include="WCaching.cpp" />
-    <ClCompile Include="WorldEntity.cpp" />
-    <ClCompile Include="WTextureSet.cpp" />
     <ClCompile Include="WPainter.cpp" />
-    <ClCompile Include="WRendering.cpp" />
+    <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="WndProc.cpp" />
+    <ClCompile Include="WRendering.cpp" />
+    <ClCompile Include="WTextureSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Background.h" />
-    <ClInclude Include="CellRect.h" />
-    <ClInclude Include="CheckersField.h" />
-    <ClInclude Include="Indexes.h" />
+    <ClInclude Include="Board.h" />
+    <ClInclude Include="CellIndexes.h" />
+    <ClInclude Include="Layout.h" />
     <ClInclude Include="Painter.h" />
-    <ClInclude Include="Rect.h" />
-    <ClInclude Include="IRenderable.h" />
+    <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderLayer.h" />
     <ClInclude Include="Rendering.h" />
     <ClInclude Include="Systems.h" />
-    <ClInclude Include="Textures.h" />
-    <ClInclude Include="WCaching.h" />
-    <ClInclude Include="WorldEntity.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="WTextureSet.h" />
     <ClInclude Include="WPainter.h" />
     <ClInclude Include="WRendering.h" />

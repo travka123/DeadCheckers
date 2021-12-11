@@ -1,19 +1,19 @@
 #pragma once
 
-#include "Rendering.h"
-
-#include <string>
-
 #include "WTextureSet.h"
-#include "WCaching.h"
+#include "Rendering.h"
+#include "Layout.h"
 
 class WRendering : public Rendering {
-
 private:
-	WTextureSet _textures;
+    WTextureSet _textures;
+    Layout _layout;
+    RECT _clientRect;
 
 public:
-	WRendering(std::wstring path);
-	void Render(HWND hWnd);
-	void SetTextures(std::wstring path);
+    WRendering(RECT clientRect, float margin, float menuWidth, std::wstring texturesPath);
+
+    void Render(HDC hDC);
+    void SetTextures(std::wstring path);
+    void SetCleintRect(RECT clientRect);
 };

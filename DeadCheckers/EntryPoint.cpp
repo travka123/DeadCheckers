@@ -2,6 +2,8 @@
 
 LRESULT CALLBACK WndProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
 
+RECT WndRect = { 0, 0, 640, 640 };
+
 int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ PSTR lpCmdLine, _In_ INT nCmdShow) {
 
     const wchar_t className[] = L"MyWindowClass";
@@ -23,16 +25,15 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
 
     RegisterClassEx(&wcex);
 
-    RECT wndRect = {0, 0, 640, 640};
-    AdjustWindowRectEx(&wndRect, WS_OVERLAPPEDWINDOW, FALSE, 0);
+    AdjustWindowRectEx(&WndRect, WS_OVERLAPPEDWINDOW, FALSE, 0);
 
     HWND hWnd = CreateWindow(className,
         L"Hello, World!",
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT,
         CW_USEDEFAULT,
-        wndRect.right - wndRect.left,
-        wndRect.bottom - wndRect.top,
+        WndRect.right - WndRect.left,
+        WndRect.bottom - WndRect.top,
         NULL,
         NULL,
         hInstance,
