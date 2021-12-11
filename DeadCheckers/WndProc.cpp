@@ -13,6 +13,7 @@ WRendering rendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
 void OnCreate()
 {
     Systems::SetRendering(&rendering);
+    Systems::SetGame(new Game(8));
 
     new Background();
     new Board();

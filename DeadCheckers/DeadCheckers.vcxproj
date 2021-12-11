@@ -142,7 +142,9 @@
     <ClCompile Include="Background.cpp" />
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="CellIndexes.cpp" />
+    <ClCompile Include="Checker.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="Layout.cpp" />
     <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
@@ -157,6 +159,8 @@
     <ClInclude Include="Background.h" />
     <ClInclude Include="Board.h" />
     <ClInclude Include="CellIndexes.h" />
+    <ClInclude Include="Checker.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="Layout.h" />
     <ClInclude Include="Painter.h" />
     <ClInclude Include="Renderable.h" />

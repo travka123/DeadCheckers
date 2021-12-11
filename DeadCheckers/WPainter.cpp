@@ -1,7 +1,7 @@
 #include "WPainter.h"
 
+#include <WinGDI.h>
 #pragma comment(lib, "Msimg32.lib")
-#include <windowsx.h>
 
 WPainter::WPainter(HDC hDC, RECT rect, WTextureSet textures, Layout layout)
 {
@@ -45,12 +45,24 @@ void WPainter::Paint(Texture texture, std::vector<Rect>& rects) {
             0,
             srcBitmapHeader.bmWidth,
             srcBitmapHeader.bmHeight,
-            transparentColor
+            0x00AB05FF
         );
     }
 
     SelectObject(srcDC, srcBitmapOld);
     DeleteObject(srcDC);
+}
+
+void WPainter::CellPaint(Texture texture, int x, int y)
+{
+    std::vector<Rect> rects;
+
+    int left = (int)(_layout.board.left + _layout.boardCellSize * x);
+    int top = (int)(_layout.board.top + _layout.boardCellSize * y);
+    Rect rect = { (int)left, (int)top, (int)(left + _layout.boardCellSize), (int)(top + _layout.boardCellSize) };
+    rects.push_back(rect);
+
+    Paint(texture, rects);
 }
 
 void WPainter::CellPaint(Texture texture, std::vector<CellRect>& cells) {
