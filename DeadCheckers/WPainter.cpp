@@ -53,7 +53,7 @@ void WPainter::Paint(Texture texture, std::vector<Rect>& rects) {
     DeleteObject(srcDC);
 }
 
-void WPainter::CellPaint(Texture texture, int x, int y)
+void WPainter::CellPaint(Texture texture, int x, int y, float scale)
 {
     std::vector<Rect> rects;
 

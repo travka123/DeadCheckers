@@ -20,7 +20,7 @@ public:
     Rect GetCanvasRect() override;
     void Paint(Texture texture, Rect rect) override;
     void Paint(Texture texture, std::vector<Rect>& rects);
-    void CellPaint(Texture texture, int x, int y) override;
+    void CellPaint(Texture texture, int x, int y, float scale) override;
     void CellPaint(Texture texture, std::vector<CellRect>& cells) override;
     void PaintIndexes(wchar_t top, wchar_t bottom) override;
 };

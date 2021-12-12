@@ -7,7 +7,6 @@
 class WRendering : public Rendering {
 private:
     WTextureSet _textures;
-    Layout _layout;
     RECT _clientRect;
 
 public:

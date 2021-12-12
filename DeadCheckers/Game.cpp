@@ -3,6 +3,8 @@
 #include <string>
 #include <exception>
 
+#include "PlayerChecker.h"
+
 Game::Game(int rowCount) {
 
 	if (rowCount % 2 == 1) {
@@ -17,7 +19,7 @@ Game::Game(int rowCount) {
 
 	int checkersInRow = rowCount / 2;
 	int verticalTeamRowCount = (rowCount - 1) / 2;
-	int teamCheckersCount = (short)verticalTeamRowCount * (short)checkersInRow;
+	int teamCheckersCount = verticalTeamRowCount * checkersInRow;
 	
 	_blackCheckers = new Checker * [teamCheckersCount];
 	_whiteCheckers = new Checker * [teamCheckersCount];
@@ -25,9 +27,9 @@ Game::Game(int rowCount) {
 	int swap = 1;
 	int pos = 0;
 	
-	for (int i = 0; i < (short)verticalTeamRowCount; i++) {
-		for (int j = 0; j < (short)checkersInRow; j++) {
-			_blackCheckers[pos] = new Checker(Texture::black_checker, i, j * 2 + swap);
+	for (int i = 0; i < verticalTeamRowCount; i++) {
+		for (int j = 0; j < checkersInRow; j++) {
+			_blackCheckers[pos] = new PlayerChecker(Texture::black_checker, i, j * 2 + swap);
 			_whiteCheckers[pos] = new Checker(Texture::white_checker, rowCount - 1 - i, j * 2 + (swap ^ 1));
 			pos++;
 		}

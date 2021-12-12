@@ -8,7 +8,7 @@ struct Rect {
 };
 
 struct CellRect {
-    int y;
-    int x;
+    float y;
+    float x;
     float scale;
 };

@@ -145,7 +145,10 @@
     <ClCompile Include="Checker.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="Game.cpp" />
+    <ClCompile Include="Input.cpp" />
+    <ClCompile Include="Interactive.cpp" />
     <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="PlayerChecker.cpp" />
     <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="Systems.cpp" />
@@ -161,8 +164,11 @@
     <ClInclude Include="CellIndexes.h" />
     <ClInclude Include="Checker.h" />
     <ClInclude Include="Game.h" />
+    <ClInclude Include="Input.h" />
+    <ClInclude Include="Interactive.h" />
     <ClInclude Include="Layout.h" />
     <ClInclude Include="Painter.h" />
+    <ClInclude Include="PlayerChecker.h" />
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderLayer.h" />
     <ClInclude Include="Rendering.h" />

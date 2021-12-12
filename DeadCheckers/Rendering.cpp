@@ -13,3 +13,21 @@ void Rendering::UnregisterEntity(Renderable* entity) {
         }
     }
 }
+
+void Rendering::CordsToCellCords(int& x, int& y)
+{
+    x = (x - _layout.board.left) / _layout.boardCellSize;
+    y = (y - _layout.board.top) / _layout.boardCellSize;
+}
+
+Rect Rendering::CellCordsToRect(int x, int y, float scale)
+{
+    Rect rect;
+
+    rect.left = _layout.board.left + _layout.boardCellSize * x;
+    rect.top = _layout.board.top + _layout.boardCellSize * y;
+    rect.right = rect.left + _layout.boardCellSize;
+    rect.bottom = rect.top + _layout.boardCellSize;
+
+    return rect;
+}

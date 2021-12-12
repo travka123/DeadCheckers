@@ -12,6 +12,6 @@ public:
     virtual Rect GetCanvasRect() = 0;
     virtual void Paint(Texture texture, Rect rect) = 0;
     virtual void CellPaint(Texture texture, std::vector<CellRect>& cellRects) = 0;
-    virtual void CellPaint(Texture texture, int x, int y) = 0;
+    virtual void CellPaint(Texture texture, int x, int y, float scale) = 0;
     virtual void PaintIndexes(wchar_t top, wchar_t bottom) = 0;
 };

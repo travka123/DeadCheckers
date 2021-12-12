@@ -12,5 +12,5 @@ Checker::Checker(Texture texture, int cellY, int cellX)
 }
 
 void Checker::Render(Painter& painter) {
-	painter.CellPaint(_texture, _cellX, _cellY);
+	painter.CellPaint(_texture, _cellX, _cellY, 1);
 }
