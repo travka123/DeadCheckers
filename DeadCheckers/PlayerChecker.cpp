@@ -5,7 +5,7 @@ PlayerChecker::PlayerChecker(Texture texture, int cellY, int cellX) : Checker(te
 {
 	RegisterInteractive();
 
-	_draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
+	_size = _draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
 	_selected = false;
 }
 
@@ -31,11 +31,15 @@ void PlayerChecker::Click(int x, int y)
 	Rect rect = Systems::GetRendering()->CellCordsToRect(_cellX, _cellY, 1);
 
 	int normalSize = rect.right - rect.left;
+	int lateralEnlargement = (normalSize * 1.25 - normalSize) / 2;
+
 	_draggingXOffset = x - rect.left;
 	_draggingYOffset = y - rect.top;
-	_draggingX = x;
-	_draggingY = y;
-	_size = normalSize;
+	_draggingX = x - lateralEnlargement;
+	_draggingY = y - lateralEnlargement;
+	_size = normalSize + lateralEnlargement * 2;
+
+	ChangeRenderLayer(RenderLayer::above_middle_1);
 }
 
 void PlayerChecker::Drag(int x, int y)
@@ -51,6 +55,7 @@ void PlayerChecker::Release()
 	if (_selected) {
 		_selected = false;
 		_draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
+		ChangeRenderLayer(RenderLayer::middle);
 	}
 }
 

@@ -12,6 +12,7 @@ protected:
 
 public:
     void RegisterEntity(Renderable* entity, RenderLayer layer);
+    void ChangeRenderLayer(Renderable* entity, RenderLayer layer);
     void UnregisterEntity(Renderable* entity);
 
     void CordsToCellCords(int& x, int& y);

@@ -3,7 +3,7 @@
 #include "Rects.h"
 
 Board::Board() {
-    RegisterRenderable(RenderLayer::above_background);
+    RegisterRenderable(RenderLayer::above_background_1);
 }
 
 void Board::Render(Painter& painter) {

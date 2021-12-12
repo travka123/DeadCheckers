@@ -1,7 +1,7 @@
 #include "CellIndexes.h"
 
 CellIndexes::CellIndexes() {
-    RegisterRenderable(RenderLayer::above_background);
+    RegisterRenderable(RenderLayer::above_background_2);
 }
 
 void CellIndexes::Render(Painter& painter) {
