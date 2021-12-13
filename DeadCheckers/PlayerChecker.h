@@ -14,6 +14,7 @@ private:
 
 public:
 	PlayerChecker(Texture texture, int cellY, int cellX);
+	~PlayerChecker() override;
 
 	void Render(Painter& painter) override;
 	void Click(int x, int y) override;

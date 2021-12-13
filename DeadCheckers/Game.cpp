@@ -7,6 +7,7 @@
 
 Game::Game() : _firstPlayerCheckers(), _secondPlayerCheckers()
 {
+	_turnCount = 0;
 }
 
 void Game::Start(int rowCount, bool useAI)
@@ -19,6 +20,10 @@ void Game::Start(int rowCount, bool useAI)
 	_useAI = useAI;
 	_boardInfo = new CellInfo[_cellCount];
 	memset(_boardInfo, 0, sizeof(CellInfo) * _cellCount);
+	_turnCount = 0;
+
+	_attackHighlight = new CellHighlight();
+	_possibleMovesHighlight = new CellHighlight();
 
 	int swap = 0;
 	for (int i = 0; i < (rowCount - 1) / 2; i++) {
@@ -26,7 +31,7 @@ void Game::Start(int rowCount, bool useAI)
 
 			CellCords cords = { j + swap ^ 1, i };
 			_boardInfo[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
-			_boardInfo[cords.y * rowCount + cords.x].team = Team::black;
+			_boardInfo[cords.y * rowCount + cords.x].team = Team::second;
 			_boardInfo[cords.y * rowCount + cords.x].notEmpty = true;
 			_secondPlayerCheckers.push_back(cords);
 
@@ -39,24 +44,7 @@ void Game::Start(int rowCount, bool useAI)
 		swap ^= 1;
 	}
 
-	/*CellCords cords = { 4, 4 };
-	_boardInfo[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::white_checker, 4, 4);
-	_boardInfo[cords.y * rowCount + cords.x].team = Team::first;
-	_boardInfo[cords.y * rowCount + cords.x].notEmpty = true;
-	_firstPlayerCheckers->push_back(cords);
-
-	cords = { 3, 3 };
-	_boardInfo[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::black_checker, 3, 3);
-	_boardInfo[cords.y * rowCount + cords.x].team = Team::black;
-	_boardInfo[cords.y * rowCount + cords.x].notEmpty = true;
-	_secondPlayerCheckers->push_back(cords);*/
-
-	_turnOf = Team::first;
-
-	_attackHighlight = new CellHighlight();
-	_possibleMovesHighlight = new CellHighlight();
-
-	Prepare();
+	PrepareNextTurn();
 }
 
 bool Game::IsMyTurn(int x, int y)
@@ -109,12 +97,34 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 			memcpy(&_boardInfo[nextY * _rowCount + nextX], &_boardInfo[y * _rowCount + x], sizeof(CellInfo));
 			memset(&_boardInfo[y * _rowCount + x], 0, sizeof(CellInfo));
 			_boardInfo[nextY * _rowCount + nextX].checker->SetCords(nextX, nextY);
+
+			CellCords old = { x,y };
+			CellCords next = { nextX, nextY };
+			auto& vec = _turnOf == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
+			auto it = std::find(vec.begin(), vec.end(), old);
+			vec[it - vec.begin()] = next;
+
+			for (CellCords& cords : *chosedMove) {
+				Team eTeam = _turnOf == Team::first ? Team::second : Team::first;
+				if (_boardInfo[cords.y * _rowCount + cords.x].team == eTeam) {
+					Checker* killedChecker = _boardInfo[cords.y * _rowCount + cords.x].checker;
+					delete killedChecker;
+					memset(&_boardInfo[cords.y * _rowCount + cords.x], 0, sizeof(CellInfo));
+					auto& eVec = eTeam == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
+					eVec.erase(std::find(eVec.begin(), eVec.end(), cords));
+				}
+			}
+
+			_turnCount++;
+			PrepareNextTurn();
 		}
 	}
 }
 
-void Game::Prepare()
+void Game::PrepareNextTurn()
 {
+	_attackHighlight->Clear();
+	_turnOf = (_turnCount % 2 == 0) ? Team::first : Team::second;
 	CollectAttackCheckers();
 	HighlightAttackCheckers();
 }
@@ -161,9 +171,14 @@ void Game::CollectAttackCheckers()
 
 void Game::GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, int y)
 {
-	int direction = _turnOf == Team::first ? -1 : 1;
+	if (_boardInfo[y * _rowCount + x].team != _turnOf) {
+		return;
+	}
 
 	if (_attackCheckers.size() == 0) {
+
+		int direction = _turnOf == Team::first ? -1 : 1;
+
 		if ((y + direction < _rowCount) && (y + direction >= 0) && (x - 1 >= 0) && (!_boardInfo[(y + direction) * _rowCount + (x - 1)].notEmpty)) {
 			CellCords cords = { x - 1, y + direction };
 			std::vector<CellCords> move;
@@ -175,6 +190,67 @@ void Game::GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, i
 			std::vector<CellCords> move;
 			move.push_back(cords);
 			moves.push_back(move);
+		}
+	}
+	else {
+		CellCords curCords = { x, y };
+		auto it = std::find(_attackCheckers.begin(), _attackCheckers.end(), curCords);
+		if (it != _attackCheckers.end()) {
+
+			CellCords incs[] = { {-1, -1}, {1, -1}, {-1, 1}, {1, 1} };
+			std::vector<CellCords> path;
+			std::vector<int> iterations;
+
+			CellCords cords = { x, y };
+			path.push_back(cords);
+			iterations.push_back(0);
+
+			do {
+
+				CellCords curCords = path.back();
+				int i = iterations.back();
+				iterations.pop_back();
+				bool criticalPath = !i;
+
+				for (; i < 4; i++) {
+					int nextX = curCords.x + incs[i].x;
+					int nextY = curCords.y + incs[i].y;
+					if ((nextX + incs[i].x >= 0) && (nextY + incs[i].y >= 0) &&
+						(nextX + incs[i].x < _rowCount) && (nextY + incs[i].y <= _rowCount) &&
+						(_boardInfo[nextY * _rowCount + nextX].notEmpty) &&
+						(_boardInfo[nextY * _rowCount + nextX].team != _turnOf) &&
+						(!_boardInfo[(nextY + incs[i].y) * _rowCount + nextX + incs[i].x].notEmpty)) {
+
+						iterations.push_back(i + 1);
+						iterations.push_back(0);
+						CellCords move = { nextX, nextY };
+						path.push_back(move);
+						move = { nextX + incs[i].x, nextY + incs[i].y };
+						path.push_back(move);
+
+						_boardInfo[curCords.y * _rowCount + curCords.x].notEmpty = false;
+						_boardInfo[nextY * _rowCount + nextX].notEmpty = false;
+
+						break;
+					}
+				}
+
+				if (i == 4) {
+					if (criticalPath) {
+						std::vector<CellCords> copyOfPath = path;
+						moves.push_back(copyOfPath);
+					}
+
+					if (path.size() >= 2) {
+						path.pop_back();
+					}
+
+					CellCords cords = path.back();
+					path.pop_back();
+					_boardInfo[cords.y * _rowCount + cords.x].notEmpty = true;
+				}
+
+			} while (iterations.size());
 		}
 	}
 }

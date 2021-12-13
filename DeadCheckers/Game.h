@@ -9,7 +9,7 @@
 enum class Team : short {
 	none,
 	first,
-	black
+	second
 };
 
 struct CellInfo
@@ -31,9 +31,10 @@ private:
 	Team _turnOf;
 	CellHighlight* _attackHighlight;
 	CellHighlight* _possibleMovesHighlight;
+	int _turnCount;
 
 
-	void Prepare();
+	void PrepareNextTurn();
 	void HighlightAttackCheckers();
 	void CollectAttackCheckers();
 	void GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, int y);

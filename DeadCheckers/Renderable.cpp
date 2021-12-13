@@ -10,3 +10,8 @@ void Renderable::ChangeRenderLayer(RenderLayer layer)
 {
 	Systems::GetRendering()->ChangeRenderLayer(this, layer);
 }
+
+void Renderable::UnregisterRenderable()
+{
+	Systems::GetRendering()->UnregisterEntity(this);
+}

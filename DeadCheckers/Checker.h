@@ -14,6 +14,7 @@ protected:
 
 public:
 	Checker(Texture texture, int cellY, int cellX);
+	virtual ~Checker();
 
 	void SetCords(int cellX, int cellY);
 

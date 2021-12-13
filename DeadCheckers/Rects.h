@@ -1,5 +1,7 @@
 #pragma once
 
+#include <string>
+
 struct Rect {
     int left;
     int top;
@@ -16,4 +18,8 @@ struct CellRect {
 struct CellCords {
     int x;
     int y;
+
+    friend bool operator== (const CellCords& c1, const CellCords& c2) {
+        return !memcmp(&c1, &c2, sizeof(CellCords));
+    }
 };

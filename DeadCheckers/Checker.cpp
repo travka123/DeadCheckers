@@ -12,6 +12,11 @@ Checker::Checker(Texture texture, int cellY, int cellX)
 	_needRedraw = true;
 }
 
+Checker::~Checker()
+{
+	UnregisterRenderable();
+}
+
 void Checker::SetCords(int cellX, int cellY)
 {
 	_cellY = cellY;

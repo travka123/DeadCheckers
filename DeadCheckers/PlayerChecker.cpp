@@ -10,6 +10,11 @@ PlayerChecker::PlayerChecker(Texture texture, int cellY, int cellX) : Checker(te
 	_needRedraw = false;
 }
 
+PlayerChecker::~PlayerChecker()
+{
+	UnregisterInteractive();
+}
+
 void PlayerChecker::Render(Painter& painter)
 {
 	if (_selected) {
