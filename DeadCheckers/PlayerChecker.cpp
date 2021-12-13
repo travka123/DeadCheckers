@@ -29,7 +29,8 @@ void PlayerChecker::Render(Painter& painter)
 
 void PlayerChecker::Click(int x, int y)
 {
-	if (Systems::GetGame()->IsMyTurn(_cellX, _cellY)) {
+	Game* game = Systems::GetGame();
+	if (game->IsMyTurn(_cellX, _cellY)) {
 		_selected = true;
 		Rect rect = Systems::GetRendering()->CellCordsToRect(_cellX, _cellY, 1);
 
@@ -43,6 +44,8 @@ void PlayerChecker::Click(int x, int y)
 		_size = normalSize + lateralEnlargement * 2;
 
 		ChangeRenderLayer(RenderLayer::above_middle_1);
+
+		game->ShowPossibleMoves(_cellX, _cellY);
 
 		_needRedraw = true;
 	}
@@ -61,8 +64,16 @@ void PlayerChecker::Release()
 {
 	if (_selected) {
 		_selected = false;
-		_draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
 		ChangeRenderLayer(RenderLayer::middle);
+
+		CellCords cords = Systems::GetRendering()->ScreenCordsToCellCords(_draggingX - _draggingXOffset + _size / 2, 
+			_draggingY - _draggingYOffset + _size / 2);
+
+		_draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
+
+		Game* game = Systems::GetGame();
+		game->HidePossibleMoves();
+		game->TryMakeMove(_cellX, _cellY, cords.x, cords.y);
 	}
 }
 

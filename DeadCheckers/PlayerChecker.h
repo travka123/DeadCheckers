@@ -11,7 +11,6 @@ private:
 	int _draggingXOffset;
 	int _size;
 	bool _selected;
-	bool _needRedraw;
 
 public:
 	PlayerChecker(Texture texture, int cellY, int cellX);

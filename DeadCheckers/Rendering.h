@@ -16,4 +16,5 @@ public:
     void ChangeRenderLayer(Renderable* entity, RenderLayer layer);
     void UnregisterEntity(Renderable* entity);
     Rect CellCordsToRect(int x, int y, float scale);
+    CellCords ScreenCordsToCellCords(int x, int y);
 };

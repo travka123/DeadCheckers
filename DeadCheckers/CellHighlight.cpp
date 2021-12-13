@@ -10,8 +10,9 @@ CellHighlight::CellHighlight()
 	_needRedraw = true;
 }
 
-void CellHighlight::Add(HighlightInfo info)
+void CellHighlight::Add(Color color, int x, int y)
 {
+	HighlightInfo info = { color, x, y };
 	_highlightCells.push_back(info);
 	_needRedraw = true;
 }

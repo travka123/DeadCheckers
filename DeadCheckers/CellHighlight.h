@@ -21,7 +21,7 @@ private:
 public:
 	CellHighlight();
 
-	void Add(HighlightInfo info);
+	void Add(Color color, int x, int y);
 	void Clear();
 	void Hide();
 	void Show();

@@ -33,3 +33,16 @@ Rect Rendering::CellCordsToRect(int x, int y, float scale)
 
 	return rect;
 }
+
+CellCords Rendering::ScreenCordsToCellCords(int x, int y)
+{
+	CellCords cords;
+
+	cords.x = (x - _layout.board.left) / _layout.boardCellSize;
+	cords.x -= (x - _layout.board.left < 0);
+
+	cords.y = (y - _layout.board.top) / _layout.boardCellSize;
+	cords.y -= (y - _layout.board.top < 0);
+
+	return cords;
+}
