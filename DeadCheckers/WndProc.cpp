@@ -14,15 +14,19 @@ WRendering* rendering = new WRendering(WndRect, 50, 30, L"Media\\Textures\\Stand
 Input* input = new Input();
 Game* game = new Game();
 
+Background* background;
+Board* board;
+CellIndexes* cellIndexes;
+
 void OnCreate()
 {
     Systems::SetRendering(rendering);
     Systems::SetInput(input);
     Systems::SetGame(game);
 
-    new Background();
-    new Board();
-    new CellIndexes();
+    background = new Background();
+    board = new Board();
+    cellIndexes = new CellIndexes();
 
     game->Start(8, false);
 }

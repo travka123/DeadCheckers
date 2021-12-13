@@ -71,6 +71,8 @@ void WRendering::Render(HDC hDC) {
 	DeleteDC(totalCacheDC);
 	DeleteDC(cacheDC);
 
+	DeleteObject(transparentBrush);
+
 	_invalidateCache = false;
 	memset(_layerNeedRedraw, false, sizeof(_layerNeedRedraw));
 }
