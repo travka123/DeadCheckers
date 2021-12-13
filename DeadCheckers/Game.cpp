@@ -31,14 +31,16 @@ void Game::Start(int rowCount, bool useAI)
 
 			CellCords cords = { j + swap ^ 1, i };
 			_boardInfo[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
-			_boardInfo[cords.y * rowCount + cords.x].team = Team::second;
 			_boardInfo[cords.y * rowCount + cords.x].notEmpty = true;
+			_boardInfo[cords.y * rowCount + cords.x].team = Team::second;
+			_boardInfo[cords.y * rowCount + cords.x].species = Species::common;
 			_secondPlayerCheckers.push_back(cords);
 
 			cords = { j + swap, rowCount - 1 - i };
 			_boardInfo[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
-			_boardInfo[cords.y * rowCount + cords.x].team = Team::first;
 			_boardInfo[cords.y * rowCount + cords.x].notEmpty = true;
+			_boardInfo[cords.y * rowCount + cords.x].team = Team::first;
+			_boardInfo[cords.y * rowCount + cords.x].species = Species::common;
 			_firstPlayerCheckers.push_back(cords);
 		}
 		swap ^= 1;
@@ -59,12 +61,22 @@ void Game::ShowPossibleMoves(int x, int y)
 		std::vector<std::vector<CellCords>> moves;
 		GetPossibleMoves(moves, x, y);
 		_possibleMovesHighlight->Clear();
-		_possibleMovesHighlight->Add(Color::green, x, y);
+		//_possibleMovesHighlight->Add(Color::green, x, y);
 		for (auto& move : moves) {
 			int endIndex = move.size() - 1;
 			for (int i = 0; i < endIndex; i++) {
 				CellCords cords = move[i];
-				_possibleMovesHighlight->Add(Color::green, cords.x, cords.y);
+				if (_boardInfo[cords.y * _rowCount + cords.x].notEmpty) {
+					if (_boardInfo[cords.y * _rowCount + cords.x].team != _turnOf) {
+						_possibleMovesHighlight->Add(Color::dark_orange, cords.x, cords.y);
+					}
+					else {
+						_possibleMovesHighlight->Add(Color::green, cords.x, cords.y);
+					}
+				}
+				else {
+					_possibleMovesHighlight->Add(Color::royal_blue, cords.x, cords.y);
+				}
 			}
 			CellCords cords = move[endIndex];
 			_possibleMovesHighlight->Add(Color::blue, cords.x, cords.y);
@@ -97,6 +109,11 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 			memcpy(&_boardInfo[nextY * _rowCount + nextX], &_boardInfo[y * _rowCount + x], sizeof(CellInfo));
 			memset(&_boardInfo[y * _rowCount + x], 0, sizeof(CellInfo));
 			_boardInfo[nextY * _rowCount + nextX].checker->SetCords(nextX, nextY);
+
+			if (((_turnOf == Team::first) && (nextY == 0)) || (nextY == _rowCount - 1)) {
+				_boardInfo[nextY * _rowCount + nextX].species = Species::queen;
+				_boardInfo[nextY * _rowCount + nextX].checker->Crown();
+			}
 
 			CellCords old = { x,y };
 			CellCords next = { nextX, nextY };
@@ -142,29 +159,46 @@ void Game::CollectAttackCheckers()
 	_attackCheckers.clear();
 	auto& vec = _turnOf == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
 	for (CellCords cords : vec) {
-		if ((cords.x - 2 >= 0) && (cords.y - 2 >= 0) &&
-			(_boardInfo[(cords.y - 1) * _rowCount + cords.x - 1].notEmpty) &&
-			(_boardInfo[(cords.y - 1) * _rowCount + cords.x - 1].team != _turnOf) &&
-			(!_boardInfo[(cords.y - 2) * _rowCount + cords.x - 2].notEmpty)) {
-			_attackCheckers.push_back(cords);
-		}
-		else if ((cords.x + 2 < _rowCount) && (cords.y - 2 >= 0) &&
-			(_boardInfo[(cords.y - 1) * _rowCount + cords.x + 1].notEmpty) &&
-			(_boardInfo[(cords.y - 1) * _rowCount + cords.x + 1].team != _turnOf) &&
-			(!_boardInfo[(cords.y - 2) * _rowCount + cords.x + 2].notEmpty)) {
-			_attackCheckers.push_back(cords);
-		}
-		else if ((cords.x - 2 >= 0) && (cords.y + 2 < _rowCount) &&
-			(_boardInfo[(cords.y + 1) * _rowCount + cords.x - 1].notEmpty) &&
-			(_boardInfo[(cords.y + 1) * _rowCount + cords.x - 1].team != _turnOf) &&
-			(!_boardInfo[(cords.y + 2) * _rowCount + cords.x - 2].notEmpty)) {
-			_attackCheckers.push_back(cords);
-		}
-		else if ((cords.x + 2 < _rowCount) && (cords.y + 2 < _rowCount) &&
-			(_boardInfo[(cords.y + 1) * _rowCount + cords.x + 1].notEmpty) &&
-			(_boardInfo[(cords.y + 1) * _rowCount + cords.x + 1].team != _turnOf) &&
-			(!_boardInfo[(cords.y + 2) * _rowCount + cords.x + 2].notEmpty)) {
-			_attackCheckers.push_back(cords);
+
+		CellCords incs[] = { {-1, -1}, {1, -1}, {-1, 1}, {1, 1} };
+
+		bool added = false;
+		for (int i = 0; (i < 4) && (!added); i++) {
+			if (_boardInfo[cords.y * _rowCount + cords.x].species == Species::common) {
+				if ((cords.x + 2 * incs[i].x >= 0) && (cords.y + 2 * incs[i].y >= 0) &&
+					(cords.x + 2 * incs[i].x < _rowCount) && (cords.y + 2 * incs[i].y < _rowCount) &&
+					(_boardInfo[(cords.y + incs[i].y) * _rowCount + cords.x + incs[i].x].notEmpty) &&
+					(_boardInfo[(cords.y + incs[i].y) * _rowCount + cords.x + incs[i].x].team != _turnOf) &&
+					(!_boardInfo[(cords.y + 2 * incs[i].y) * _rowCount + cords.x + 2 * incs[i].x].notEmpty)) {
+					_attackCheckers.push_back(cords);
+					added = true;
+				}
+			}
+			else if (_boardInfo[cords.y * _rowCount + cords.x].species == Species::queen) {
+				int eCellX = cords.x + incs[i].x;
+				int eCellY = cords.y + incs[i].y;
+				int nextX = eCellX + incs[i].x;
+				int nextY = eCellY + incs[i].y;
+
+				while ((!added) && ((nextX >= 0) && (nextY >= 0) && (nextX < _rowCount) && (nextY < _rowCount))) {
+					if (_boardInfo[eCellY * _rowCount + eCellX].notEmpty) {
+
+						if ((_boardInfo[eCellY * _rowCount + eCellX].team != _turnOf) &&
+							(!_boardInfo[nextY * _rowCount + nextX].notEmpty)) {
+							_attackCheckers.push_back(cords);
+							added = true;
+						}
+						else {
+							break;
+						}
+						
+					}
+					eCellX += incs[i].x;
+					eCellY += incs[i].y;
+					nextX += incs[i].x;
+					nextY += incs[i].y;
+				}
+			}
 		}
 	}
 }
@@ -175,21 +209,47 @@ void Game::GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, i
 		return;
 	}
 
+	CellCords selfCords = { x, y };
+
 	if (_attackCheckers.size() == 0) {
+		if (_boardInfo[y * _rowCount + x].species == Species::common) {
 
-		int direction = _turnOf == Team::first ? -1 : 1;
+			int direction = _turnOf == Team::first ? -1 : 1;
 
-		if ((y + direction < _rowCount) && (y + direction >= 0) && (x - 1 >= 0) && (!_boardInfo[(y + direction) * _rowCount + (x - 1)].notEmpty)) {
-			CellCords cords = { x - 1, y + direction };
-			std::vector<CellCords> move;
-			move.push_back(cords);
-			moves.push_back(move);
+			if ((y + direction < _rowCount) && (y + direction >= 0) && (x - 1 >= 0) && (!_boardInfo[(y + direction) * _rowCount + (x - 1)].notEmpty)) {
+				
+				CellCords cords = { x - 1, y + direction };
+				std::vector<CellCords> move;
+				move.push_back(selfCords);
+				move.push_back(cords);
+				moves.push_back(move);
+			}
+			if ((y + direction < _rowCount) && (y + direction >= 0) && (x + 1 < _rowCount) && (!_boardInfo[(y + direction) * _rowCount + (x + 1)].notEmpty)) {
+				CellCords cords = { x + 1, y + direction };
+				std::vector<CellCords> move;
+				move.push_back(selfCords);
+				move.push_back(cords);
+				moves.push_back(move);
+			}
 		}
-		if ((y + direction < _rowCount) && (y + direction >= 0) && (x + 1 < _rowCount) && (!_boardInfo[(y + direction) * _rowCount + (x + 1)].notEmpty)) {
-			CellCords cords = { x + 1, y + direction };
-			std::vector<CellCords> move;
-			move.push_back(cords);
-			moves.push_back(move);
+		else {
+			CellCords incs[] = { {-1, -1}, {1, -1}, {-1, 1}, {1, 1} };
+			for (int i = 0; i < 4; i++) {
+				int nextX = x + incs[i].x;
+				int nextY = y + incs[i].y;
+				while ((nextX >= 0) && (nextY >= 0) && (nextX < _rowCount) && (nextY < _rowCount) &&
+					(!_boardInfo[nextY * _rowCount + nextX].notEmpty)) {
+
+					CellCords cords = { nextX, nextY };
+					std::vector<CellCords> move;
+					move.push_back(selfCords);
+					move.push_back(cords);
+					moves.push_back(move);
+
+					nextX += incs[i].x;
+					nextY += incs[i].y;
+				}
+			}
 		}
 	}
 	else {
@@ -197,6 +257,7 @@ void Game::GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, i
 		auto it = std::find(_attackCheckers.begin(), _attackCheckers.end(), curCords);
 		if (it != _attackCheckers.end()) {
 
+			Species species = _boardInfo[curCords.y * _rowCount + curCords.x].species;
 			CellCords incs[] = { {-1, -1}, {1, -1}, {-1, 1}, {1, 1} };
 			std::vector<CellCords> path;
 			std::vector<int> iterations;
@@ -215,12 +276,34 @@ void Game::GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, i
 				for (; i < 4; i++) {
 					int nextX = curCords.x + incs[i].x;
 					int nextY = curCords.y + incs[i].y;
-					if ((nextX + incs[i].x >= 0) && (nextY + incs[i].y >= 0) &&
-						(nextX + incs[i].x < _rowCount) && (nextY + incs[i].y <= _rowCount) &&
-						(_boardInfo[nextY * _rowCount + nextX].notEmpty) &&
-						(_boardInfo[nextY * _rowCount + nextX].team != _turnOf) &&
-						(!_boardInfo[(nextY + incs[i].y) * _rowCount + nextX + incs[i].x].notEmpty)) {
+					bool canBite = false; 
+					
+					if (species == Species::common) {
+						canBite = (nextX + incs[i].x >= 0) && (nextY + incs[i].y >= 0) &&
+							(nextX + incs[i].x < _rowCount) && (nextY + incs[i].y < _rowCount) &&
+							(_boardInfo[nextY * _rowCount + nextX].notEmpty) &&
+							(_boardInfo[nextY * _rowCount + nextX].team != _turnOf) &&
+							(!_boardInfo[(nextY + incs[i].y) * _rowCount + nextX + incs[i].x].notEmpty);
+					}
+					else {
+						while ((nextX + incs[i].x >= 0) && (nextY + incs[i].y >= 0) &&
+							(nextX + incs[i].x < _rowCount) && (nextY + incs[i].y < _rowCount)) {
 
+							if (_boardInfo[nextY * _rowCount + nextX].notEmpty) {
+
+								if ((_boardInfo[nextY * _rowCount + nextX].team != _turnOf) &&
+									(!_boardInfo[(nextY + incs[i].y) * _rowCount + nextX + incs[i].x].notEmpty)) {
+									canBite = true;
+								}
+								break;
+							}
+
+							nextX += incs[i].x;
+							nextY += incs[i].y;
+						}
+					}
+					
+					if (canBite) {
 						iterations.push_back(i + 1);
 						iterations.push_back(0);
 						CellCords move = { nextX, nextY };

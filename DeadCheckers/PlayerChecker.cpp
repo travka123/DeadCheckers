@@ -24,7 +24,7 @@ void PlayerChecker::Render(Painter& painter)
 		rect.right = rect.left + _size;
 		rect.bottom = rect.top + _size;
 
-		painter.Paint(_texture, rect);
+		Checker::Render(painter, rect);
 	}
 	else {
 		Checker::Render(painter);
@@ -90,5 +90,5 @@ bool PlayerChecker::IsIn(int x, int y)
 
 bool PlayerChecker::NeedRedraw()
 {
-	return _needRedraw;
+	return _needRedraw || _selected;
 }

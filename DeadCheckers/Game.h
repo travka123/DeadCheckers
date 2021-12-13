@@ -6,6 +6,12 @@
 
 #include "CellHighlight.h"
 
+enum class Species : short {
+	none,
+	common,
+	queen
+};
+
 enum class Team : short {
 	none,
 	first,
@@ -16,6 +22,7 @@ struct CellInfo
 {
 	bool notEmpty;
 	Team team;
+	Species species;
 	Checker* checker;
 };
 

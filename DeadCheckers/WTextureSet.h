@@ -10,7 +10,6 @@
 class WTextureSet {
 private:
 	HBITMAP _textures[TEXTURES_COUNT];
-	UINT _transparentColor;
 
 public:
 	UINT GetTransparentColor();

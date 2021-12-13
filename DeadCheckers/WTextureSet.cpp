@@ -4,7 +4,7 @@
 #include <exception>
 
 UINT WTextureSet::GetTransparentColor() {
-    return _transparentColor;
+    return 0x00AB05FF;
 }
 
 HBITMAP WTextureSet::Get(Texture texture) {
@@ -13,8 +13,6 @@ HBITMAP WTextureSet::Get(Texture texture) {
 
 WTextureSet WTextureSet::LoadFrom(std::wstring path) {
     WTextureSet set;
-
-    set._transparentColor = 0x00AB05FF;
 
     HBITMAP loaded = (HBITMAP)LoadImageW(NULL, (path + L"\\Background.bmp").c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
     if (loaded == NULL) {
@@ -45,6 +43,12 @@ WTextureSet WTextureSet::LoadFrom(std::wstring path) {
         throw std::exception();
     }
     set._textures[static_cast<int>(Texture::black_checker)] = loaded;
+
+    loaded = (HBITMAP)LoadImageW(NULL, (path + L"\\Crown.bmp").c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    if (loaded == NULL) {
+        throw std::exception();
+    }
+    set._textures[static_cast<int>(Texture::crown)] = loaded;
 
     return set;
 }
