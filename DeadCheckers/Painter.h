@@ -1,8 +1,10 @@
 #pragma once
 
 #include <vector>
+
 #include "Rects.h"
 #include "Texture.h"
+#include "Color.h"
 
 class Painter {
 private:
@@ -14,4 +16,5 @@ public:
     virtual void CellPaint(Texture texture, std::vector<CellRect>& cellRects) = 0;
     virtual void CellPaint(Texture texture, int x, int y, float scale) = 0;
     virtual void PaintIndexes(wchar_t top, wchar_t bottom) = 0;
+    virtual void PaintCellIn(Color color, int x, int y) = 0;
 };

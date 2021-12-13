@@ -105,6 +105,18 @@ void WPainter::PaintIndexes(wchar_t top, wchar_t bottom) {
     }
 }
 
+void WPainter::PaintCellIn(Color color, int x, int y)
+{
+    HBRUSH brush = CreateSolidBrush(static_cast<int>(color));
+
+    int left = (int)(_layout.board.left + _layout.boardCellSize * x);
+    int top = (int)(_layout.board.top + _layout.boardCellSize * y);
+    RECT rect = { left, top, left + _layout.boardCellSize + 1, top + _layout.boardCellSize + 1 };
+    FillRect(_hDC, &rect, brush);
+
+    DeleteObject(brush);
+}
+
 void WPainter::PaintFullScreen(HDC srcDC, int width, int height)
 {
     TransparentBlt(

@@ -4,15 +4,17 @@
 
 #include "Checker.h"
 
+#include "CellHighlight.h"
+
 enum class Team : short {
 	none,
-	white,
+	first,
 	black
 };
 
 struct CellInfo
 {
-	bool isEmpty;
+	bool notEmpty;
 	Team team;
 	Checker* checker;
 };
@@ -23,10 +25,19 @@ private:
 	int _cellCount;
 	bool _useAI;
 	CellInfo* _boardInfo;
+	std::vector<CellCords>* _firstPlayerCheckers;
+	std::vector<CellCords>* _secondPlayerCheckers;
+	std::vector<CellCords> _attackCheckers;
 	Team _turnOf;
+	CellHighlight* _attackHighlight;
+
+	void Prepare();
+	void HighlightIfAttack();
+	void CollectAttackCheckers();
 
 public:
 	void Start(int rowCount, bool useAI);
 	bool IsMyTurn(int x, int y);
+	
 
 };

@@ -10,9 +10,9 @@
 
 extern RECT WndRect;
 
-WRendering* rendering = new WRendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
-Input* input = new Input();
-Game* game = new Game();
+WRendering* rendering;
+Input* input;
+Game* game;
 
 Background* background;
 Board* board;
@@ -20,6 +20,10 @@ CellIndexes* cellIndexes;
 
 void OnCreate()
 {
+    rendering = new WRendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
+    input = new Input();
+    game = new Game();
+
     Systems::SetRendering(rendering);
     Systems::SetInput(input);
     Systems::SetGame(game);

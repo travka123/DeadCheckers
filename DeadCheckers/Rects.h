@@ -12,3 +12,8 @@ struct CellRect {
     float x;
     float scale;
 };
+
+struct CellCords {
+    int x;
+    int y;
+};
