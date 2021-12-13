@@ -75,7 +75,7 @@ void Game::ShowPossibleMoves(int x, int y)
 					}
 				}
 				else {
-					_possibleMovesHighlight->Add(Color::royal_blue, cords.x, cords.y);
+					_possibleMovesHighlight->Add(Color::yellow, cords.x, cords.y);
 				}
 			}
 			CellCords cords = move[endIndex];
@@ -142,7 +142,11 @@ void Game::PrepareNextTurn()
 {
 	_attackHighlight->Clear();
 	_turnOf = (_turnCount % 2 == 0) ? Team::first : Team::second;
-	CollectAttackCheckers();
+
+	auto& checkers = _turnOf == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
+	_attackCheckers.clear();
+	
+	CollectAttackCheckers(checkers, _attackCheckers);
 	HighlightAttackCheckers();
 }
 
@@ -154,11 +158,9 @@ void Game::HighlightAttackCheckers()
 	_attackHighlight->Show();
 }
 
-void Game::CollectAttackCheckers()
+void Game::CollectAttackCheckers(std::vector<CellCords>& checkers, std::vector<CellCords>& attackCheckers)
 {
-	_attackCheckers.clear();
-	auto& vec = _turnOf == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
-	for (CellCords cords : vec) {
+	for (CellCords cords : checkers) {
 
 		CellCords incs[] = { {-1, -1}, {1, -1}, {-1, 1}, {1, 1} };
 
@@ -170,7 +172,7 @@ void Game::CollectAttackCheckers()
 					(_boardInfo[(cords.y + incs[i].y) * _rowCount + cords.x + incs[i].x].notEmpty) &&
 					(_boardInfo[(cords.y + incs[i].y) * _rowCount + cords.x + incs[i].x].team != _turnOf) &&
 					(!_boardInfo[(cords.y + 2 * incs[i].y) * _rowCount + cords.x + 2 * incs[i].x].notEmpty)) {
-					_attackCheckers.push_back(cords);
+					attackCheckers.push_back(cords);
 					added = true;
 				}
 			}
@@ -185,7 +187,7 @@ void Game::CollectAttackCheckers()
 
 						if ((_boardInfo[eCellY * _rowCount + eCellX].team != _turnOf) &&
 							(!_boardInfo[nextY * _rowCount + nextX].notEmpty)) {
-							_attackCheckers.push_back(cords);
+							attackCheckers.push_back(cords);
 							added = true;
 						}
 						else {

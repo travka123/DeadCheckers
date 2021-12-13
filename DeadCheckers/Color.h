@@ -6,5 +6,5 @@ enum class Color
 	green = 0x0000FF00,
 	blue = 0x00FF0000,
 	dark_orange = 0x00008CFF,
-	royal_blue = 0x00E16941
+	yellow = 0x0000FFFF
 };

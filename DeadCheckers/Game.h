@@ -43,7 +43,7 @@ private:
 
 	void PrepareNextTurn();
 	void HighlightAttackCheckers();
-	void CollectAttackCheckers();
+	void CollectAttackCheckers(std::vector<CellCords>& checkers, std::vector<CellCords>& attackCheckers);
 	void GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, int y);
 
 public:
