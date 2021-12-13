@@ -41,7 +41,7 @@ int WINAPI WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _
     );
 
     const int timerId = 1;
-    const int targetFps = 600;
+    const int targetFps = 60;
     SetTimer(hWnd, timerId, 1000 / targetFps, nullptr);
 
     ShowWindow(hWnd, nCmdShow);
