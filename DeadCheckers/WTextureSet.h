@@ -9,7 +9,7 @@
 
 class WTextureSet {
 private:
-	HBITMAP _textures[static_cast<int>(Texture::TEXTURES_COUNT)];
+	HBITMAP _textures[TEXTURES_COUNT];
 	UINT _transparentColor;
 
 public:

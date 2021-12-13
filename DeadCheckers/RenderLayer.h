@@ -1,5 +1,6 @@
 #pragma once
 
+const int RENDER_LAYERS_COUNT = 8;
 enum class RenderLayer : int {
 	background = 0,
 	above_background_1,
@@ -8,7 +9,5 @@ enum class RenderLayer : int {
 	middle,
 	above_middle_1,
 	above_middle_2,
-	very_top,
-
-	LAYERS_COUNT
+	very_top
 };

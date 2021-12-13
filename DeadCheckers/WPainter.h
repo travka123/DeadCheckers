@@ -23,4 +23,7 @@ public:
     void CellPaint(Texture texture, int x, int y, float scale) override;
     void CellPaint(Texture texture, std::vector<CellRect>& cells) override;
     void PaintIndexes(wchar_t top, wchar_t bottom) override;
+    
+    void PaintFullScreen(HDC srcDC, int width, int height);
+    void SetDC(HDC hDC);
 };

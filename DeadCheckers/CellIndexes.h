@@ -7,4 +7,5 @@ class CellIndexes : Renderable {
 public:
     CellIndexes();
     void Render(Painter& painter);
+    bool NeedRedraw() override;
 };

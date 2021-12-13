@@ -11,6 +11,7 @@ private:
 	int _draggingXOffset;
 	int _size;
 	bool _selected;
+	bool _needRedraw;
 
 public:
 	PlayerChecker(Texture texture, int cellY, int cellX);
@@ -20,4 +21,5 @@ public:
 	void Drag(int x, int y) override;
 	void Release() override;
 	bool IsIn(int x, int y) override;
+	bool NeedRedraw() override;
 };

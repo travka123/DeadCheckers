@@ -8,4 +8,5 @@ public:
     void RegisterRenderable(RenderLayer layer);
     void ChangeRenderLayer(RenderLayer layer);
     virtual void Render(Painter& painter) = 0;
+    virtual bool NeedRedraw() = 0;
 };

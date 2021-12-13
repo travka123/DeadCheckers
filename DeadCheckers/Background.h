@@ -8,5 +8,6 @@
 class Background : Renderable {
 public:
     Background();
-    void Render(Painter& painter);
+    void Render(Painter& painter) override;
+    bool NeedRedraw() override;
 };

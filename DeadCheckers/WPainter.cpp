@@ -45,7 +45,7 @@ void WPainter::Paint(Texture texture, std::vector<Rect>& rects) {
             0,
             srcBitmapHeader.bmWidth,
             srcBitmapHeader.bmHeight,
-            0x00AB05FF
+            transparentColor
         );
     }
 
@@ -71,7 +71,9 @@ void WPainter::CellPaint(Texture texture, std::vector<CellRect>& cells) {
     for (CellRect& cell : cells) {
         int left = (int)(_layout.board.left + _layout.boardCellSize * cell.x);
         int top = (int)(_layout.board.top + _layout.boardCellSize * cell.y);
-        Rect rect = { (int)left, (int)top, (int)(left + _layout.boardCellSize), (int)(top + _layout.boardCellSize) };
+
+        // +1 т к отбрасывается дробная часть при float -> int
+        Rect rect = { (int)left, (int)top, (int)(left + _layout.boardCellSize + 1), (int)(top + _layout.boardCellSize + 1) };
         rects.push_back(rect);
     }
     Paint(texture, rects);
@@ -101,6 +103,28 @@ void WPainter::PaintIndexes(wchar_t top, wchar_t bottom) {
 
         DrawTextExW(_hDC, (wchar_t*)&bottom, 1, &rect, DT_CENTER | DT_SINGLELINE | DT_VCENTER, 0);
     }
+}
+
+void WPainter::PaintFullScreen(HDC srcDC, int width, int height)
+{
+    TransparentBlt(
+        _hDC,
+        _clientRect.left,
+        _clientRect.top,
+        _clientRect.right - _clientRect.left,
+        _clientRect.bottom - _clientRect.top,
+        srcDC,
+        0,
+        0,
+        width,
+        height,
+        0x00AB05FF
+    );
+}
+
+void WPainter::SetDC(HDC hDC)
+{
+    _hDC = hDC;
 }
 
 

@@ -2,6 +2,7 @@
 
 void Rendering::RegisterEntity(Renderable* entity, RenderLayer layer) {
 	_layers[static_cast<int>(layer)].push_back(entity);
+	_layerNeedRedraw[static_cast<int>(layer)] = true;
 }
 
 void Rendering::ChangeRenderLayer(Renderable* entity, RenderLayer layer)
@@ -11,19 +12,14 @@ void Rendering::ChangeRenderLayer(Renderable* entity, RenderLayer layer)
 }
 
 void Rendering::UnregisterEntity(Renderable* entity) {
-	for (auto& layer : _layers) {
-		auto it = std::find(layer.begin(), layer.end(), entity);
-		if (it != layer.end()) {
-			layer.erase(it);
+	for (int i = 0; i < RENDER_LAYERS_COUNT; i++) {
+		auto it = std::find(_layers[i].begin(), _layers[i].end(), entity);
+		if (it != _layers[i].end()) {
+			_layers[i].erase(it);
+			_layerNeedRedraw[i] = true;
 			break;
 		}
 	}
-}
-
-void Rendering::CordsToCellCords(int& x, int& y)
-{
-	x = (x - _layout.board.left) / _layout.boardCellSize;
-	y = (y - _layout.board.top) / _layout.boardCellSize;
 }
 
 Rect Rendering::CellCordsToRect(int x, int y, float scale)

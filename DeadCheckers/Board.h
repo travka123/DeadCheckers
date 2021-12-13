@@ -7,4 +7,5 @@ class Board : Renderable {
 public:
     Board();
     void Render(Painter& painter);
+    bool NeedRedraw() override;
 };

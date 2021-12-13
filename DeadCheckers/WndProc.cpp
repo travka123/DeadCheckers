@@ -10,31 +10,34 @@
 
 extern RECT WndRect;
 
-WRendering rendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
-Input input;
+WRendering* rendering = new WRendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
+Input* input = new Input();
+Game* game = new Game();
 
 void OnCreate()
 {
-    Systems::SetRendering(&rendering);
-    Systems::SetInput(&input);
-    Systems::SetGame(new Game(8));
+    Systems::SetRendering(rendering);
+    Systems::SetInput(input);
+    Systems::SetGame(game);
 
     new Background();
     new Board();
     new CellIndexes();
+
+    game->Start(8, false);
 }
 
 void OnSize(HWND hWnd) {
     RECT rect;
     GetClientRect(hWnd, &rect);
-    rendering.SetCleintRect(rect);
+    rendering->SetCleintRect(rect);
     InvalidateRect(hWnd, &rect, FALSE);
 }
 
 void OnPaint(HWND hWnd) {
     PAINTSTRUCT ps;
     BeginPaint(hWnd, &ps);
-    rendering.Render(ps.hdc);
+    rendering->Render(ps.hdc);
     EndPaint(hWnd, &ps);
 }
 
@@ -42,6 +45,7 @@ void OnTimer(HWND hWnd) {
     RECT rect;
     GetClientRect(hWnd, &rect);
     InvalidateRect(hWnd, &rect, FALSE);
+    UpdateWindow(hWnd);
 }
 
 extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {
@@ -64,16 +68,15 @@ extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         break;
 
     case WM_MOUSEMOVE:
-        input.ProcessHover(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        input->ProcessHover(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         break;
 
     case WM_LBUTTONDOWN:
-        input.ProcessClick(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
+        input->ProcessClick(GET_X_LPARAM(lParam), GET_Y_LPARAM(lParam));
         break;
 
-    case WM_MOUSELEAVE:
     case WM_LBUTTONUP:
-        input.ProcessRelease();
+        input->ProcessRelease();
         break;
 
     case WM_SIZE:

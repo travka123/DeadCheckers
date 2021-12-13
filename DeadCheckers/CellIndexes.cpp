@@ -7,3 +7,8 @@ CellIndexes::CellIndexes() {
 void CellIndexes::Render(Painter& painter) {
     painter.PaintIndexes(L'A', L'1');
 }
+
+bool CellIndexes::NeedRedraw()
+{
+    return false;
+}

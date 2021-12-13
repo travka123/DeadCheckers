@@ -14,7 +14,7 @@ HBITMAP WTextureSet::Get(Texture texture) {
 WTextureSet WTextureSet::LoadFrom(std::wstring path) {
     WTextureSet set;
 
-    set._transparentColor = 0x00C67B71;
+    set._transparentColor = 0x00AB05FF;
 
     HBITMAP loaded = (HBITMAP)LoadImageW(NULL, (path + L"\\Background.bmp").c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
     if (loaded == NULL) {

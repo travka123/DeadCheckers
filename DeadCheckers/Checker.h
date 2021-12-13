@@ -15,4 +15,5 @@ public:
 	Checker(Texture texture, int cellY, int cellX);
 
 	void Render(Painter& painter) override;
+	bool NeedRedraw() override;
 };

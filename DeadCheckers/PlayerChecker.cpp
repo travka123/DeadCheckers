@@ -7,6 +7,7 @@ PlayerChecker::PlayerChecker(Texture texture, int cellY, int cellX) : Checker(te
 
 	_size = _draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
 	_selected = false;
+	_needRedraw = false;
 }
 
 void PlayerChecker::Render(Painter& painter)
@@ -22,31 +23,37 @@ void PlayerChecker::Render(Painter& painter)
 	}
 	else {
 		Checker::Render(painter);
+		_needRedraw = false;
 	}
 }
 
 void PlayerChecker::Click(int x, int y)
 {
-	_selected = true;
-	Rect rect = Systems::GetRendering()->CellCordsToRect(_cellX, _cellY, 1);
+	if (Systems::GetGame()->IsMyTurn(_cellX, _cellY)) {
+		_selected = true;
+		Rect rect = Systems::GetRendering()->CellCordsToRect(_cellX, _cellY, 1);
 
-	int normalSize = rect.right - rect.left;
-	int lateralEnlargement = (normalSize * 1.25 - normalSize) / 2;
+		int normalSize = rect.right - rect.left;
+		int lateralEnlargement = (normalSize * 1.25 - normalSize) / 2;
 
-	_draggingXOffset = x - rect.left;
-	_draggingYOffset = y - rect.top;
-	_draggingX = x - lateralEnlargement;
-	_draggingY = y - lateralEnlargement;
-	_size = normalSize + lateralEnlargement * 2;
+		_draggingXOffset = x - rect.left;
+		_draggingYOffset = y - rect.top;
+		_draggingX = x - lateralEnlargement;
+		_draggingY = y - lateralEnlargement;
+		_size = normalSize + lateralEnlargement * 2;
 
-	ChangeRenderLayer(RenderLayer::above_middle_1);
+		ChangeRenderLayer(RenderLayer::above_middle_1);
+
+		_needRedraw = true;
+	}
 }
 
 void PlayerChecker::Drag(int x, int y)
 {
+	int lateralEnlargement = _size * 0.25 / 1.25 / 2;
 	if (_selected) {
-		_draggingX = x;
-		_draggingY = y;
+		_draggingX = x - lateralEnlargement;
+		_draggingY = y - lateralEnlargement;
 	}
 }
 
@@ -61,6 +68,11 @@ void PlayerChecker::Release()
 
 bool PlayerChecker::IsIn(int x, int y)
 {
-	Systems::GetRendering()->CordsToCellCords(x, y);
-	return (x == _cellX) && (y == _cellY);
+	Rect rect = Systems::GetRendering()->CellCordsToRect(_cellX, _cellY, 1);
+	return (x >= rect.left) && (x <= rect.right) && (y >= rect.top) && (y <= rect.bottom);
+}
+
+bool PlayerChecker::NeedRedraw()
+{
+	return _needRedraw;
 }

@@ -23,3 +23,8 @@ void Board::Render(Painter& painter) {
     painter.CellPaint(Texture::white_cell, whiteCells);
     painter.CellPaint(Texture::black_cell, blackCells);
 }
+
+bool Board::NeedRedraw()
+{
+    return false;
+}
