@@ -10,4 +10,6 @@ namespace GameAlgorithms {
 	void GetNonAttackingMoves(const BoardInfo& board, BoardCords checker, std::vector<std::vector<BoardCords>>& moves);
 	void GetAttackingMoves(const BoardInfo& board, BoardCords checker, std::vector<std::vector<BoardCords>>& moves);
 	void GetMoves(const BoardInfo& board, BoardCords checker, std::vector<BoardCords>& attackCheckers, std::vector<std::vector<BoardCords>>& moves);
+	void ApplyMove(BoardInfo& board, const std::vector<BoardCords>& move, std::vector<BoardCords>& removedCheckers);
+	void ApplyMoveWithHistory(BoardInfo& board, const std::vector<BoardCords>& move, std::vector<CellInfoWithCords>& changedCells);
 }

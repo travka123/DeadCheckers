@@ -11,15 +11,12 @@ class Game {
 private:
 	bool _useAI;
 	BoardInfo _boardInfo;
-	std::vector<BoardCords> _firstPlayerCheckers;
-	std::vector<BoardCords> _secondPlayerCheckers;
 	std::vector<BoardCords> _attackCheckers;
 	std::map<BoardCords, Checker*> _checkersEntities;
 	Team _turnOf;
 	CellHighlight* _attackHighlight;
 	CellHighlight* _possibleMovesHighlight;
 	int _turnCount;
-
 
 	void PrepareNextTurn();
 	void HighlightAttackCheckers();

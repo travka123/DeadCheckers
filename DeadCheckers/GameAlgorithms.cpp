@@ -195,3 +195,33 @@ void GameAlgorithms::GetMoves(const BoardInfo& board, BoardCords checker, std::v
 		GetAttackingMoves(board, checker, moves);
 	}
 }
+
+void GameAlgorithms::ApplyMove(BoardInfo& board, const std::vector<BoardCords>& move, std::vector<BoardCords>& removedCheckers)
+{
+	const BoardCords& currentPosition = move[0];
+	const BoardCords& nextPosition = move[move.size() - 1];
+
+	memcpy(&board.cells[nextPosition.y * board.dimension + nextPosition.x], &board.cells[currentPosition.y * board.dimension + currentPosition.x], sizeof(CellInfo));
+	memset(&board.cells[currentPosition.y * board.dimension + currentPosition.x], 0, sizeof(CellInfo));
+
+	CellInfo& movedCheckerCell = board.cells[nextPosition.y * board.dimension + nextPosition.x];
+
+	auto& teamCheckers = movedCheckerCell.team == Team::first ? board.firstPlayerCheckers : board.secondPlayerCheckers;
+	auto it = std::find(teamCheckers.begin(), teamCheckers.end(), currentPosition);
+	teamCheckers[it - teamCheckers.begin()] = nextPosition;
+
+	if (((movedCheckerCell.team == Team::first) && (nextPosition.y == 0)) || (nextPosition.y == board.dimension - 1)) {
+		movedCheckerCell.species = Species::queen;
+	}
+
+	auto& enemyTeamCheckers = movedCheckerCell.team == Team::first ? board.secondPlayerCheckers : board.firstPlayerCheckers;
+	for (const BoardCords& pathCords : move) {
+		CellInfo* cellOnPath = &board.cells[pathCords.y * board.dimension + pathCords.x];
+		if (cellOnPath->team == (movedCheckerCell.team == Team::first ? Team::second : Team::first)) {
+			memset(cellOnPath, 0, sizeof(CellInfo));
+			auto it = std::find(enemyTeamCheckers.begin(), enemyTeamCheckers.end(), pathCords);
+			enemyTeamCheckers.erase(it);
+			removedCheckers.push_back(pathCords);
+		}
+	}
+}

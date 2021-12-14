@@ -6,7 +6,7 @@
 #include "GameAlgorithms.h"
 #include "PlayerChecker.h"
 
-Game::Game() : _firstPlayerCheckers(), _secondPlayerCheckers()
+Game::Game() : _boardInfo()
 {
 	_turnCount = 0;
 }
@@ -35,14 +35,14 @@ void Game::Start(int rowCount, bool useAI)
 			_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
 			_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
 			_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
-			_secondPlayerCheckers.push_back(cords);
+			_boardInfo.secondPlayerCheckers.push_back(cords);
 			_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
 
 			cords = { j + swap, rowCount - 1 - i };
 			_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
 			_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::first;
 			_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
-			_firstPlayerCheckers.push_back(cords);
+			_boardInfo.firstPlayerCheckers.push_back(cords);
 			_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
 		}
 		swap ^= 1;
@@ -108,45 +108,36 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 		_boardInfo.cells[y * _boardInfo.dimension + x].team == _turnOf) {
 
 		std::vector<std::vector<BoardCords>> moves;
-		BoardCords checkerCords = { x, y };
-		BoardCords destCords = { nextX, nextY };
-		GameAlgorithms::GetMoves(_boardInfo, checkerCords, _attackCheckers, moves);
+		BoardCords currentCords = { x, y };
+		BoardCords nextCords = { nextX, nextY };
+		GameAlgorithms::GetMoves(_boardInfo, currentCords, _attackCheckers, moves);
 
 		std::vector<BoardCords>* chosedMove = nullptr;
 		for (auto& move : moves) {
 			BoardCords dest = move[move.size() - 1];
 			if ((dest.x == nextX) && (dest.y == nextY)) {
 				chosedMove = &move;
+				break;
 			}
 		}
 
 		if (chosedMove != nullptr) {
-			memcpy(&_boardInfo.cells[nextY * _boardInfo.dimension + nextX], &_boardInfo.cells[y * _boardInfo.dimension + x], sizeof(CellInfo));
-			memset(&_boardInfo.cells[y * _boardInfo.dimension + x], 0, sizeof(CellInfo));
 
-			(_checkersEntities[destCords] = _checkersEntities[checkerCords])->SetCords(nextX, nextY);
-			_checkersEntities.erase(checkerCords);
+			bool wasQueen = _boardInfo.cells[y * _boardInfo.dimension + x].species == Species::queen;
+			std::vector<BoardCords> removedCheckers;
 
-			if (((_turnOf == Team::first) && (nextY == 0)) || (nextY == _boardInfo.dimension - 1)) {
-				_boardInfo.cells[nextY * _boardInfo.dimension + nextX].species = Species::queen;
-				_checkersEntities[destCords]->Crown();
+			GameAlgorithms::ApplyMove(_boardInfo, *chosedMove, removedCheckers);
+
+			(_checkersEntities[nextCords] = _checkersEntities[currentCords])->SetCords(nextX, nextY);
+			_checkersEntities.erase(currentCords);
+
+			if ((_boardInfo.cells[nextY * _boardInfo.dimension + nextX].species == Species::queen) != wasQueen) {
+				_checkersEntities[nextCords]->Crown();
 			}
 
-			BoardCords old = { x,y };
-			BoardCords next = { nextX, nextY };
-			auto& vec = _turnOf == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
-			auto it = std::find(vec.begin(), vec.end(), old);
-			vec[it - vec.begin()] = next;
-
-			for (BoardCords& cords : *chosedMove) {
-				Team eTeam = _turnOf == Team::first ? Team::second : Team::first;
-				if (_boardInfo.cells[cords.y * _boardInfo.dimension + cords.x].team == eTeam) {
-					Checker* killedChecker = _checkersEntities[cords];
-					delete killedChecker;
-					memset(&_boardInfo.cells[cords.y * _boardInfo.dimension + cords.x], 0, sizeof(CellInfo));
-					auto& eVec = eTeam == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
-					eVec.erase(std::find(eVec.begin(), eVec.end(), cords));
-				}
+			for (BoardCords& cords : removedCheckers) {
+				delete _checkersEntities[cords];
+				_checkersEntities.erase(cords);
 			}
 
 			PrepareNextTurn();
@@ -159,7 +150,7 @@ void Game::PrepareNextTurn()
 	_turnCount++;
 	_turnOf = (_turnCount % 2 == 0) ? Team::first : Team::second;
 
-	auto& checkers = _turnOf == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
+	auto& checkers = _turnOf == Team::first ? _boardInfo.firstPlayerCheckers : _boardInfo.secondPlayerCheckers;
 	_attackCheckers.clear();
 	GameAlgorithms::GetAttackCheckers(_boardInfo, checkers, _attackCheckers);
 

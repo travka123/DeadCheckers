@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Checker.h"
+#include "Rects.h"
 
 enum class Species : short {
 	none,
@@ -21,7 +22,19 @@ struct CellInfo
 	Species species;
 };
 
+struct CellInfoWithCords {
+	BoardCords cords;
+	CellInfo cellInfo;
+};
+
 struct BoardInfo {
 	CellInfo* cells;
 	int dimension;
+	std::vector<BoardCords> firstPlayerCheckers;
+	std::vector<BoardCords> secondPlayerCheckers;
+
+	BoardInfo() : firstPlayerCheckers(), secondPlayerCheckers() {
+		cells = nullptr;
+		dimension = 0;
+	}
 };
