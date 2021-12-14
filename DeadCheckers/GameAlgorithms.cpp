@@ -108,6 +108,7 @@ void GameAlgorithms::GetAttackingMoves(const BoardInfo& board, BoardCords checke
 	BoardCords incs[] = { {-1, -1}, {1, -1}, {-1, 1}, {1, 1} };
 	std::vector<BoardCords> path;
 	std::vector<int> iterations;
+	int lastUsedDirection = -1;
 
 	Species species = board.cells[checker.y * board.dimension + checker.x].species;
 	Team checkerTeam = board.cells[checker.y * board.dimension + checker.x].team;
@@ -123,6 +124,12 @@ void GameAlgorithms::GetAttackingMoves(const BoardInfo& board, BoardCords checke
 		bool criticalPath = !i;
 
 		for (; i < 4; i++) {
+			
+			if ((lastUsedDirection >= 0) && (incs[lastUsedDirection].x != incs[i].x) && (incs[lastUsedDirection].y != incs[i].y)) {
+				lastUsedDirection = -1;
+				continue;
+			}
+
 			int nextX = curCords.x + incs[i].x;
 			int nextY = curCords.y + incs[i].y;
 			bool canBite = false;
@@ -153,6 +160,7 @@ void GameAlgorithms::GetAttackingMoves(const BoardInfo& board, BoardCords checke
 			}
 
 			if (canBite) {
+				lastUsedDirection = i;
 				iterations.push_back(i + 1);
 				iterations.push_back(0);
 				BoardCords move = { nextX, nextY };

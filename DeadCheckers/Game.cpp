@@ -11,6 +11,10 @@ Game::Game() : _boardInfo()
 	_turnCount = 0;
 }
 
+void Test1() {
+	
+}
+
 void Game::Start(int rowCount, bool useAI)
 {
 	if (rowCount % 2 == 1) {
@@ -48,6 +52,37 @@ void Game::Start(int rowCount, bool useAI)
 		swap ^= 1;
 	}
 
+	////Test 1
+	//BoardCords cords = { 6, 0 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::first;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
+	//_boardInfo.firstPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
+
+	//cords = { 4, 2 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
+	//_boardInfo.secondPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
+
+	//cords = { 5, 5 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
+	//_boardInfo.secondPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
+
+	//cords = { 1, 1 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
+	//_boardInfo.secondPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
+
+	
+
 	PrepareNextTurn();
 }
 
@@ -67,8 +102,7 @@ void Game::ShowPossibleMoves(int x, int y)
 
 		for (auto& move : moves) {
 
-			int lastPositionIndex = move.size() - 1;
-			for (int i = 0; i < lastPositionIndex; i++) {
+			for (int i = 0; i < move.size() - 1; i++) {
 
 				BoardCords cords = move[i];
 				if (_boardInfo.cells[cords.y * _boardInfo.dimension + cords.x].notEmpty) {
@@ -90,7 +124,7 @@ void Game::ShowPossibleMoves(int x, int y)
 
 			}
 
-			BoardCords cords = move[lastPositionIndex];
+			BoardCords cords = move[move.size() - 1];
 			_possibleMovesHighlight->Add(Color::blue, cords.x, cords.y);
 		}
 	}
@@ -172,7 +206,7 @@ void Game::HighlightAttackCheckers()
 
 void Game::UseAI()
 {
-	AITurn turn = UseAI(2, _turnOf, _turnOf);
+	AITurn turn = UseAI(3, _turnOf, _turnOf);
 	TryMakeMove(turn.start.x, turn.start.y, turn.end.x, turn.end.y);
 }
 
