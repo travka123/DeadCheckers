@@ -22,4 +22,8 @@ struct BoardCords {
     friend bool operator== (const BoardCords& c1, const BoardCords& c2) {
         return !memcmp(&c1, &c2, sizeof(BoardCords));
     }
+
+    friend bool operator< (const BoardCords& c1, const BoardCords& c2) {
+        return memcmp(&c1, &c2, sizeof(BoardCords)) < 0;
+    }
 };

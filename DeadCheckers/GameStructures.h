@@ -19,7 +19,6 @@ struct CellInfo
 	bool notEmpty;
 	Team team;
 	Species species;
-	Checker* checker;
 };
 
 struct BoardInfo {

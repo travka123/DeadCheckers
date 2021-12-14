@@ -32,18 +32,18 @@ void Game::Start(int rowCount, bool useAI)
 		for (int j = 0; j < rowCount; j += 2) {
 
 			BoardCords cords = { j + swap ^ 1, i };
-			_boardInfo.cells[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
 			_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
 			_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
 			_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
 			_secondPlayerCheckers.push_back(cords);
+			_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
 
 			cords = { j + swap, rowCount - 1 - i };
-			_boardInfo.cells[cords.y * rowCount + cords.x].checker = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
 			_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
 			_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::first;
 			_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
 			_firstPlayerCheckers.push_back(cords);
+			_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
 		}
 		swap ^= 1;
 	}
@@ -108,8 +108,9 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 		_boardInfo.cells[y * _boardInfo.dimension + x].team == _turnOf) {
 
 		std::vector<std::vector<BoardCords>> moves;
-		BoardCords checker = { x, y };
-		GameAlgorithms::GetMoves(_boardInfo, checker, _attackCheckers, moves);
+		BoardCords checkerCords = { x, y };
+		BoardCords destCords = { nextX, nextY };
+		GameAlgorithms::GetMoves(_boardInfo, checkerCords, _attackCheckers, moves);
 
 		std::vector<BoardCords>* chosedMove = nullptr;
 		for (auto& move : moves) {
@@ -122,11 +123,13 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 		if (chosedMove != nullptr) {
 			memcpy(&_boardInfo.cells[nextY * _boardInfo.dimension + nextX], &_boardInfo.cells[y * _boardInfo.dimension + x], sizeof(CellInfo));
 			memset(&_boardInfo.cells[y * _boardInfo.dimension + x], 0, sizeof(CellInfo));
-			_boardInfo.cells[nextY * _boardInfo.dimension + nextX].checker->SetCords(nextX, nextY);
+
+			(_checkersEntities[destCords] = _checkersEntities[checkerCords])->SetCords(nextX, nextY);
+			_checkersEntities.erase(checkerCords);
 
 			if (((_turnOf == Team::first) && (nextY == 0)) || (nextY == _boardInfo.dimension - 1)) {
 				_boardInfo.cells[nextY * _boardInfo.dimension + nextX].species = Species::queen;
-				_boardInfo.cells[nextY * _boardInfo.dimension + nextX].checker->Crown();
+				_checkersEntities[destCords]->Crown();
 			}
 
 			BoardCords old = { x,y };
@@ -138,7 +141,7 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 			for (BoardCords& cords : *chosedMove) {
 				Team eTeam = _turnOf == Team::first ? Team::second : Team::first;
 				if (_boardInfo.cells[cords.y * _boardInfo.dimension + cords.x].team == eTeam) {
-					Checker* killedChecker = _boardInfo.cells[cords.y * _boardInfo.dimension + cords.x].checker;
+					Checker* killedChecker = _checkersEntities[cords];
 					delete killedChecker;
 					memset(&_boardInfo.cells[cords.y * _boardInfo.dimension + cords.x], 0, sizeof(CellInfo));
 					auto& eVec = eTeam == Team::first ? _firstPlayerCheckers : _secondPlayerCheckers;
