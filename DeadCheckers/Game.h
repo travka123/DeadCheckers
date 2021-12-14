@@ -11,7 +11,6 @@ class Game {
 private:
 	bool _useAI;
 	BoardInfo _boardInfo;
-	std::vector<BoardCords> _attackCheckers;
 	std::map<BoardCords, Checker*> _checkersEntities;
 	Team _turnOf;
 	CellHighlight* _attackHighlight;
@@ -20,6 +19,7 @@ private:
 
 	void PrepareNextTurn();
 	void HighlightAttackCheckers();
+	AITurn UseAI(int depth, Team turnOf, Team countFor);
 
 public:
 	Game();
@@ -29,5 +29,6 @@ public:
 	void ShowPossibleMoves(int x, int y);
 	void HidePossibleMoves();
 	void TryMakeMove(int x, int y, int nextX, int nextY);
+	void UseAI();
 
 };

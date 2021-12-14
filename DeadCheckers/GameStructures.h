@@ -38,3 +38,10 @@ struct BoardInfo {
 		dimension = 0;
 	}
 };
+
+struct AITurn
+{
+	BoardCords start;
+	BoardCords end;
+	int minmax;
+};

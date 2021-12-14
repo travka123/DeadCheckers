@@ -18,7 +18,7 @@ void Game::Start(int rowCount, bool useAI)
 	}
 
 	_boardInfo.dimension = rowCount;
-	_useAI = useAI;
+	_useAI = true;
 	_turnCount = -1;
 	_attackHighlight = new CellHighlight();
 	_possibleMovesHighlight = new CellHighlight();
@@ -63,7 +63,7 @@ void Game::ShowPossibleMoves(int x, int y)
 
 		std::vector<std::vector<BoardCords>> moves;
 		BoardCords checker = { x, y };
-		GameAlgorithms::GetMoves(_boardInfo, checker, _attackCheckers, moves);
+		GameAlgorithms::GetMoves(_boardInfo, checker, moves);
 
 		for (auto& move : moves) {
 
@@ -110,7 +110,7 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 		std::vector<std::vector<BoardCords>> moves;
 		BoardCords currentCords = { x, y };
 		BoardCords nextCords = { nextX, nextY };
-		GameAlgorithms::GetMoves(_boardInfo, currentCords, _attackCheckers, moves);
+		GameAlgorithms::GetMoves(_boardInfo, currentCords, moves);
 
 		std::vector<BoardCords>* chosedMove = nullptr;
 		for (auto& move : moves) {
@@ -150,20 +150,88 @@ void Game::PrepareNextTurn()
 	_turnCount++;
 	_turnOf = (_turnCount % 2 == 0) ? Team::first : Team::second;
 
-	auto& checkers = _turnOf == Team::first ? _boardInfo.firstPlayerCheckers : _boardInfo.secondPlayerCheckers;
-	_attackCheckers.clear();
-	GameAlgorithms::GetAttackCheckers(_boardInfo, checkers, _attackCheckers);
-
-	HighlightAttackCheckers();
+	if (_useAI && (_turnOf == Team::second)) {
+		UseAI();
+	}
+	else {
+		HighlightAttackCheckers();
+	}
 }
 
 void Game::HighlightAttackCheckers()
 {
 	_attackHighlight->Clear();
-	for (const BoardCords& cords : _attackCheckers) {
+	std::vector<BoardCords> attackCheckers;
+	auto& checkers = _turnOf == Team::first ? _boardInfo.firstPlayerCheckers : _boardInfo.secondPlayerCheckers;
+	GameAlgorithms::GetAttackCheckers(_boardInfo, checkers, attackCheckers);
+	for (const BoardCords& cords : attackCheckers) {
 		_attackHighlight->Add(Color::red, cords.x, cords.y);
 	}
 	_attackHighlight->Show();
+}
+
+void Game::UseAI()
+{
+	AITurn turn = UseAI(2, _turnOf, _turnOf);
+	TryMakeMove(turn.start.x, turn.start.y, turn.end.x, turn.end.y);
+}
+
+AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
+{
+	std::vector<BoardCords> attackCheckers;
+	Team eTeam = turnOf == Team::first ? Team::second : Team::first;
+	auto& checkers = turnOf == Team::first ? _boardInfo.firstPlayerCheckers : _boardInfo.secondPlayerCheckers;
+	auto& eCheckers = turnOf == Team::first ? _boardInfo.secondPlayerCheckers : _boardInfo.firstPlayerCheckers;
+
+	GameAlgorithms::GetAttackCheckers(_boardInfo, checkers, attackCheckers);
+
+	std::vector<std::vector<BoardCords>> moves;
+	std::vector<CellInfoWithCords> moveHistory;
+	std::vector<BoardCords> removedCheckers;
+
+	auto searchFunc = attackCheckers.size() ? GameAlgorithms::GetAttackingMoves : GameAlgorithms::GetNonAttackingMoves;
+	auto& checkersForTest = attackCheckers.size() ? attackCheckers : checkers;
+
+	AITurn best;
+	best.minmax = -9999999;
+	for (BoardCords& checker : checkersForTest) {
+		moves.clear();
+		searchFunc(_boardInfo, checker, moves);
+
+		for (auto& move : moves) {
+
+			moveHistory.clear();
+			removedCheckers.clear();
+
+			GameAlgorithms::ApplyMoveWithHistory(_boardInfo, move, moveHistory, removedCheckers);
+
+			AITurn current;
+			current.start = move[0];
+			current.end = move[move.size() - 1];
+
+			if ((depth == 0) || (!(checkers.size() && eCheckers.size()))) {
+				
+				if (turnOf == countFor) {
+					current.minmax = (int)(checkers.size() - eCheckers.size());
+				}
+				else {
+					current.minmax = (int)(eCheckers.size() - checkers.size());
+				}
+
+			}
+			else {
+				current.minmax = UseAI(depth - 1, eTeam, countFor).minmax;
+			}
+
+			if (current.minmax > best.minmax) {
+				best = current;
+			}
+
+			GameAlgorithms::RollBack(_boardInfo, moveHistory, removedCheckers, current.start, current.end, turnOf);
+		}
+	}
+
+	return best;
 }
 
 
