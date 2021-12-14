@@ -2,39 +2,17 @@
 
 #include <vector>
 
-#include "Checker.h"
-
 #include "CellHighlight.h"
 
-enum class Species : short {
-	none,
-	common,
-	queen
-};
-
-enum class Team : short {
-	none,
-	first,
-	second
-};
-
-struct CellInfo
-{
-	bool notEmpty;
-	Team team;
-	Species species;
-	Checker* checker;
-};
+#include "GameStructures.h"
 
 class Game {
 private:
-	int _rowCount;
-	int _cellCount;
 	bool _useAI;
-	CellInfo* _boardInfo;
-	std::vector<CellCords> _firstPlayerCheckers;
-	std::vector<CellCords> _secondPlayerCheckers;
-	std::vector<CellCords> _attackCheckers;
+	BoardInfo _boardInfo;
+	std::vector<BoardCords> _firstPlayerCheckers;
+	std::vector<BoardCords> _secondPlayerCheckers;
+	std::vector<BoardCords> _attackCheckers;
 	Team _turnOf;
 	CellHighlight* _attackHighlight;
 	CellHighlight* _possibleMovesHighlight;
@@ -43,8 +21,6 @@ private:
 
 	void PrepareNextTurn();
 	void HighlightAttackCheckers();
-	void CollectAttackCheckers(std::vector<CellCords>& checkers, std::vector<CellCords>& attackCheckers);
-	void GetPossibleMoves(std::vector<std::vector<CellCords>>& moves, int x, int y);
 
 public:
 	Game();

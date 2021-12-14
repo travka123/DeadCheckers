@@ -15,11 +15,11 @@ struct CellRect {
     float scale;
 };
 
-struct CellCords {
+struct BoardCords {
     int x;
     int y;
 
-    friend bool operator== (const CellCords& c1, const CellCords& c2) {
-        return !memcmp(&c1, &c2, sizeof(CellCords));
+    friend bool operator== (const BoardCords& c1, const BoardCords& c2) {
+        return !memcmp(&c1, &c2, sizeof(BoardCords));
     }
 };

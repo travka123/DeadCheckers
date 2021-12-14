@@ -71,7 +71,7 @@ void PlayerChecker::Release()
 		_selected = false;
 		ChangeRenderLayer(RenderLayer::middle);
 
-		CellCords cords = Systems::GetRendering()->ScreenCordsToCellCords(_draggingX - _draggingXOffset + _size / 2, 
+		BoardCords cords = Systems::GetRendering()->ScreenCordsToCellCords(_draggingX - _draggingXOffset + _size / 2, 
 			_draggingY - _draggingYOffset + _size / 2);
 
 		_draggingXOffset = _draggingYOffset = _draggingX = _draggingY = 0;
