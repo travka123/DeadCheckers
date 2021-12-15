@@ -139,7 +139,8 @@ void GameAlgorithms::GetAttackingMoves(const BoardInfo& board, BoardCords checke
 					(nextX + incs[i].x < board.dimension) && (nextY + incs[i].y < board.dimension) &&
 					(board.cells[nextY * board.dimension + nextX].notEmpty) &&
 					(board.cells[nextY * board.dimension + nextX].team != checkerTeam) &&
-					(!board.cells[(nextY + incs[i].y) * board.dimension + nextX + incs[i].x].notEmpty);
+					(!board.cells[(nextY + incs[i].y) * board.dimension + nextX + incs[i].x].notEmpty) &&
+					((board.cells[(nextY + incs[i].y) * board.dimension + nextX + incs[i].x].team == Team::none));
 			}
 			else {
 				while ((nextX + incs[i].x >= 0) && (nextY + incs[i].y >= 0) &&
@@ -147,8 +148,9 @@ void GameAlgorithms::GetAttackingMoves(const BoardInfo& board, BoardCords checke
 
 					if (board.cells[nextY * board.dimension + nextX].notEmpty) {
 
-						if ((board.cells[nextY * board.dimension + nextX].team != checkerTeam) &&
-							(!board.cells[(nextY + incs[i].y) * board.dimension + nextX + incs[i].x].notEmpty)) {
+						if (((board.cells[nextY * board.dimension + nextX].team != checkerTeam) &&
+							(!board.cells[(nextY + incs[i].y) * board.dimension + nextX + incs[i].x].notEmpty)) &&
+							((board.cells[(nextY + incs[i].y) * board.dimension + nextX + incs[i].x].team == Team::none))) {
 							canBite = true;
 						}
 						break;
@@ -258,9 +260,11 @@ void GameAlgorithms::ApplyMoveWithHistory(BoardInfo& board, const std::vector<Bo
 	cellForChange.cellInfo = board.cells[nextPosition.y * board.dimension + nextPosition.x];
 	changedCells.push_back(cellForChange);
 
-	memcpy(&board.cells[nextPosition.y * board.dimension + nextPosition.x], &board.cells[currentPosition.y * board.dimension + currentPosition.x], sizeof(CellInfo));
-	memset(&board.cells[currentPosition.y * board.dimension + currentPosition.x], 0, sizeof(CellInfo));
-
+	if (!(currentPosition == nextPosition)) {
+		memcpy(&board.cells[nextPosition.y * board.dimension + nextPosition.x], &board.cells[currentPosition.y * board.dimension + currentPosition.x], sizeof(CellInfo));
+		memset(&board.cells[currentPosition.y * board.dimension + currentPosition.x], 0, sizeof(CellInfo));
+	}
+	
 	CellInfo& movedCheckerCell = board.cells[nextPosition.y * board.dimension + nextPosition.x];
 
 	auto& teamCheckers = movedCheckerCell.team == Team::first ? board.firstPlayerCheckers : board.secondPlayerCheckers;
@@ -291,7 +295,7 @@ void GameAlgorithms::ApplyMoveWithHistory(BoardInfo& board, const std::vector<Bo
 }
 
 void GameAlgorithms::RollBack(BoardInfo& board, const std::vector<CellInfoWithCords>& changedCells, const std::vector<BoardCords>& removedCheckers,
-	BoardCords start, BoardCords end, Team turnOf)
+	BoardCords startCords, BoardCords endCords, Team turnOf)
 {
 	for (int i = changedCells.size() - 1; i >= 0; i--) {
 		const CellInfoWithCords& change = changedCells[i];
@@ -299,8 +303,8 @@ void GameAlgorithms::RollBack(BoardInfo& board, const std::vector<CellInfoWithCo
 	}
 
 	auto& checkers = turnOf == Team::first ? board.firstPlayerCheckers : board.secondPlayerCheckers;
-	auto it = std::find(checkers.begin(), checkers.end(), end);
-	checkers[it - checkers.begin()] = start;
+	auto it = std::find(checkers.begin(), checkers.end(), endCords);
+	checkers[it - checkers.begin()] = startCords;
 
 	auto& eCheckers = turnOf == Team::first ? board.secondPlayerCheckers : board.firstPlayerCheckers;
 	for (const BoardCords& checker : removedCheckers) {

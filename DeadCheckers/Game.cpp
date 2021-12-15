@@ -6,13 +6,15 @@
 #include "GameAlgorithms.h"
 #include "PlayerChecker.h"
 
+int counter = 0;
+
 Game::Game() : _boardInfo()
 {
 	_turnCount = 0;
 }
 
 void Test1() {
-	
+
 }
 
 void Game::Start(int rowCount, bool useAI)
@@ -65,23 +67,45 @@ void Game::Start(int rowCount, bool useAI)
 	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
 	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
 	//_boardInfo.secondPlayerCheckers.push_back(cords);
-	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
 
 	//cords = { 5, 5 };
 	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
 	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
 	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
 	//_boardInfo.secondPlayerCheckers.push_back(cords);
-	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
 
 	//cords = { 1, 1 };
 	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
 	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
 	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::queen;
 	//_boardInfo.secondPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
+
+	////Test 2
+	//BoardCords cords = { 4, 4 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::first;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
+	//_boardInfo.firstPlayerCheckers.push_back(cords);
 	//_checkersEntities[cords] = new PlayerChecker(Texture::white_checker, cords.y, cords.x);
 
-	
+	//cords = { 5, 5 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
+	//_boardInfo.secondPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
+
+	//cords = { 1, 1 };
+	//_boardInfo.cells[cords.y * rowCount + cords.x].notEmpty = true;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].team = Team::second;
+	//_boardInfo.cells[cords.y * rowCount + cords.x].species = Species::common;
+	//_boardInfo.secondPlayerCheckers.push_back(cords);
+	//_checkersEntities[cords] = new PlayerChecker(Texture::black_checker, cords.y, cords.x);
+
+
 
 	PrepareNextTurn();
 }
@@ -163,7 +187,9 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 			GameAlgorithms::ApplyMove(_boardInfo, *chosedMove, removedCheckers);
 
 			(_checkersEntities[nextCords] = _checkersEntities[currentCords])->SetCords(nextX, nextY);
-			_checkersEntities.erase(currentCords);
+			if (!(currentCords == nextCords)) {
+				_checkersEntities.erase(currentCords);
+			}
 
 			if ((_boardInfo.cells[nextY * _boardInfo.dimension + nextX].species == Species::queen) != wasQueen) {
 				_checkersEntities[nextCords]->Crown();
@@ -185,11 +211,14 @@ void Game::PrepareNextTurn()
 	_turnOf = (_turnCount % 2 == 0) ? Team::first : Team::second;
 
 	if (_useAI && (_turnOf == Team::second)) {
+		_attackHighlight->Clear();
 		UseAI();
 	}
 	else {
 		HighlightAttackCheckers();
 	}
+
+	
 }
 
 void Game::HighlightAttackCheckers()
@@ -226,25 +255,61 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 	auto searchFunc = attackCheckers.size() ? GameAlgorithms::GetAttackingMoves : GameAlgorithms::GetNonAttackingMoves;
 	auto& checkersForTest = attackCheckers.size() ? attackCheckers : checkers;
 
-	AITurn best;
-	best.minmax = -9999999;
+	AITurn result;
+
+	if (turnOf == countFor) {
+		result.minmax = -9999999;
+	}
+	else {
+		result.minmax = 9999999;
+	}
+	
+
 	for (BoardCords& checker : checkersForTest) {
+
+		counter++;
+
+		if (counter >= 0x00010355) {
+			counter++;
+		}
+
 		moves.clear();
 		searchFunc(_boardInfo, checker, moves);
+
+		
 
 		for (auto& move : moves) {
 
 			moveHistory.clear();
 			removedCheckers.clear();
 
-			GameAlgorithms::ApplyMoveWithHistory(_boardInfo, move, moveHistory, removedCheckers);
-
 			AITurn current;
 			current.start = move[0];
 			current.end = move[move.size() - 1];
 
+			//TestCode 
+			if (move.size() == 1) {
+				counter++;
+			}
+
+			//TestCode
+			for (BoardCords& cellInfo : _boardInfo.firstPlayerCheckers) {
+				if (_boardInfo.cells[cellInfo.y * _boardInfo.dimension + cellInfo.x].team != Team::first) {
+					counter++;
+				}
+			}
+
+			GameAlgorithms::ApplyMoveWithHistory(_boardInfo, move, moveHistory, removedCheckers);
+
+			//TestCode
+			for (BoardCords& cellInfo : _boardInfo.firstPlayerCheckers) {
+				if (_boardInfo.cells[cellInfo.y * _boardInfo.dimension + cellInfo.x].team != Team::first) {
+					counter++;
+				}
+			}
+
 			if ((depth == 0) || (!(checkers.size() && eCheckers.size()))) {
-				
+
 				if (turnOf == countFor) {
 					current.minmax = (int)(checkers.size() - eCheckers.size());
 				}
@@ -257,15 +322,24 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 				current.minmax = UseAI(depth - 1, eTeam, countFor).minmax;
 			}
 
-			if (current.minmax > best.minmax) {
-				best = current;
+			if (turnOf == countFor) {
+				if (current.minmax > result.minmax) {
+					result = current;
+				}
 			}
+			else {
+				if (current.minmax < result.minmax) {
+					result = current;
+				}
+			}
+			
 
 			GameAlgorithms::RollBack(_boardInfo, moveHistory, removedCheckers, current.start, current.end, turnOf);
+
 		}
 	}
 
-	return best;
+	return result;
 }
 
 
