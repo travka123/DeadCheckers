@@ -7,6 +7,8 @@
 #include "Background.h"
 #include "CellIndexes.h"
 #include "Board.h"
+#include "RestartButton.h"
+#include "ChangeStyleButton.h"
 
 extern RECT WndRect;
 
@@ -17,10 +19,12 @@ Game* game;
 Background* background;
 Board* board;
 CellIndexes* cellIndexes;
+RestartButton* restartButton;
+ChangeStyleButton* changeStyleButton;
 
 void OnCreate()
 {
-    rendering = new WRendering(WndRect, 50, 30, L"Media\\Textures\\Standart");
+    rendering = new WRendering(WndRect, 50, 70);
     input = new Input();
     game = new Game();
 
@@ -31,6 +35,9 @@ void OnCreate()
     background = new Background();
     board = new Board();
     cellIndexes = new CellIndexes();
+
+    restartButton = new RestartButton();
+    changeStyleButton = new ChangeStyleButton();
 
     game->Start(8, false);
 }

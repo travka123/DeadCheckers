@@ -50,5 +50,17 @@ WTextureSet WTextureSet::LoadFrom(std::wstring path) {
     }
     set._textures[static_cast<int>(Texture::crown)] = loaded;
 
+    loaded = (HBITMAP)LoadImageW(NULL, (path + L"\\BtnRestart.bmp").c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    if (loaded == NULL) {
+        throw std::exception();
+    }
+    set._textures[static_cast<int>(Texture::btn_restart)] = loaded;
+
+    loaded = (HBITMAP)LoadImageW(NULL, (path + L"\\BtnChangeStyle.bmp").c_str(), IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+    if (loaded == NULL) {
+        throw std::exception();
+    }
+    set._textures[static_cast<int>(Texture::btn_change_style)] = loaded;
+
     return set;
 }

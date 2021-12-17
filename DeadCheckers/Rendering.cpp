@@ -46,3 +46,11 @@ BoardCords Rendering::ScreenCordsToCellCords(int x, int y)
 
 	return cords;
 }
+
+Rect Rendering::ButtonIndexToRect(int index)
+{
+	Rect menu = _layout.menu;
+	menu.bottom -= index * 2 * _layout.menuWidth;
+	menu.top = menu.bottom - _layout.menuWidth;
+	return menu;
+}

@@ -20,6 +20,7 @@ private:
 
 public:
 	CellHighlight();
+	~CellHighlight();
 
 	void Add(Color color, int x, int y);
 	void Clear();

@@ -2,8 +2,10 @@
 #include "WPainter.h"
 #include "RenderLayer.h"
 
-WRendering::WRendering(RECT clientRect, float margin, float menuWidth, std::wstring texturesPath) {
-	_textures = WTextureSet::LoadFrom(texturesPath);
+WRendering::WRendering(RECT clientRect, float margin, float menuWidth) {
+	_textures = WTextureSet::LoadFrom(_styles[0]);
+	_currentStyle = 0;
+
 	_clientRect = clientRect;
 	_layout = Layout::GetLayout(clientRect, margin, menuWidth);
 	_invalidateCache = true;
@@ -86,6 +88,13 @@ void WRendering::SetCleintRect(RECT clientRect)
 {
 	_clientRect = clientRect;
 	_layout = Layout::GetLayout(clientRect, _layout.margin, _layout.menuWidth);
+	_invalidateCache = true;
+}
+
+void WRendering::SetNextStyle()
+{
+	_currentStyle = (_currentStyle + 1) % _styles.size();
+	_textures = WTextureSet::LoadFrom(_styles[_currentStyle]);
 	_invalidateCache = true;
 }
 

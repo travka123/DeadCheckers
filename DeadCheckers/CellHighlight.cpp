@@ -10,6 +10,11 @@ CellHighlight::CellHighlight()
 	_needRedraw = true;
 }
 
+CellHighlight::~CellHighlight()
+{
+	UnregisterRenderable();
+}
+
 void CellHighlight::Add(Color color, int x, int y)
 {
 	HighlightInfo info = { color, x, y };

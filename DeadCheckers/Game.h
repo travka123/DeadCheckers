@@ -19,6 +19,7 @@ private:
 
 	void PrepareNextTurn();
 	void HighlightAttackCheckers();
+	void PrepareForRestart();
 	AITurn UseAI(int depth, Team turnOf, Team countFor);
 
 public:
@@ -30,5 +31,6 @@ public:
 	void HidePossibleMoves();
 	void TryMakeMove(int x, int y, int nextX, int nextY);
 	void UseAI();
+	void Restart();
 
 };

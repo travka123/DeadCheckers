@@ -17,4 +17,6 @@ public:
     void UnregisterEntity(Renderable* entity);
     Rect CellCordsToRect(int x, int y, float scale);
     BoardCords ScreenCordsToCellCords(int x, int y);
+    Rect ButtonIndexToRect(int index);
+    virtual void SetNextStyle() = 0;
 };

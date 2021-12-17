@@ -233,10 +233,31 @@ void Game::HighlightAttackCheckers()
 	_attackHighlight->Show();
 }
 
+void Game::PrepareForRestart()
+{
+	delete _attackHighlight;
+	delete _possibleMovesHighlight;
+
+	delete _boardInfo.cells;
+	_boardInfo.firstPlayerCheckers.clear();
+	_boardInfo.secondPlayerCheckers.clear();
+
+	for (auto& kv : _checkersEntities) {
+		delete kv.second;
+	}
+	_checkersEntities.clear();
+}
+
 void Game::UseAI()
 {
-	AITurn turn = UseAI(3, _turnOf, _turnOf);
+	AITurn turn = UseAI(4, _turnOf, _turnOf);
 	TryMakeMove(turn.start.x, turn.start.y, turn.end.x, turn.end.y);
+}
+
+void Game::Restart()
+{
+	PrepareForRestart();
+	Start(_boardInfo.dimension, _useAI);
 }
 
 AITurn Game::UseAI(int depth, Team turnOf, Team countFor)

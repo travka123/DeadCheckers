@@ -143,6 +143,7 @@
     <ClCompile Include="Board.cpp" />
     <ClCompile Include="CellHighlight.cpp" />
     <ClCompile Include="CellIndexes.cpp" />
+    <ClCompile Include="ChangeStyleButton.cpp" />
     <ClCompile Include="Checker.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="Game.cpp" />
@@ -153,6 +154,7 @@
     <ClCompile Include="PlayerChecker.cpp" />
     <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
+    <ClCompile Include="RestartButton.cpp" />
     <ClCompile Include="Systems.cpp" />
     <ClCompile Include="WPainter.cpp" />
     <ClCompile Include="Renderable.cpp" />
@@ -165,6 +167,7 @@
     <ClInclude Include="Board.h" />
     <ClInclude Include="CellHighlight.h" />
     <ClInclude Include="CellIndexes.h" />
+    <ClInclude Include="ChangeStyleButton.h" />
     <ClInclude Include="Checker.h" />
     <ClInclude Include="Color.h" />
     <ClInclude Include="Game.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="Renderable.h" />
     <ClInclude Include="RenderLayer.h" />
     <ClInclude Include="Rendering.h" />
+    <ClInclude Include="RestartButton.h" />
     <ClInclude Include="Systems.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="WTextureSet.h" />

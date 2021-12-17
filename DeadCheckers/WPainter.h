@@ -11,8 +11,8 @@
 class WPainter : public Painter {
 private:
     HDC _hDC;
-    WTextureSet _textures;
     RECT _clientRect;
+    WTextureSet _textures;
     Layout _layout;
 
 public:
