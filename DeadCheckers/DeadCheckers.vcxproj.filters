@@ -13,6 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Файлы заголовков\buttons">
+      <UniqueIdentifier>{9617a876-a335-4930-80a3-f580e5b0c696}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -152,14 +155,14 @@
     <ClInclude Include="GameStructures.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="RestartButton.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="ChangeStyleButton.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="RestartButton.h">
+      <Filter>Файлы заголовков\buttons</Filter>
     </ClInclude>
     <ClInclude Include="UseAIButton.h">
-      <Filter>Файлы заголовков</Filter>
+      <Filter>Файлы заголовков\buttons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

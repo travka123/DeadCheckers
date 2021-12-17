@@ -10,7 +10,12 @@ UseAIButton::UseAIButton()
 
 void UseAIButton::Render(Painter& painter)
 {
-	painter.Paint(Texture::white_checker, Systems::GetRendering()->ButtonIndexToRect(2));
+	if (_useAI) {
+		painter.Paint(Texture::btn_set_p2, Systems::GetRendering()->ButtonIndexToRect(2));
+	}
+	else {
+		painter.Paint(Texture::btn_set_ai, Systems::GetRendering()->ButtonIndexToRect(2));
+	}
 	_needRedraw = false;
 }
 
@@ -22,6 +27,8 @@ bool UseAIButton::NeedRedraw()
 void UseAIButton::Click(int x, int y)
 {
 	Systems::GetGame()->SwitchSecondPlayerMode();
+	_useAI = !_useAI;
+	_needRedraw = true;
 }
 
 void UseAIButton::Drag(int x, int y)

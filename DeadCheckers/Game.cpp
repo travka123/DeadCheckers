@@ -24,7 +24,7 @@ void Game::Start(int rowCount, bool useAI)
 	}
 
 	_boardInfo.dimension = rowCount;
-	_useAI = true;
+	_useAI = useAI;
 	_turnCount = -1;
 	_attackHighlight = new CellHighlight();
 	_possibleMovesHighlight = new CellHighlight();
