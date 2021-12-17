@@ -32,5 +32,6 @@ public:
 	void TryMakeMove(int x, int y, int nextX, int nextY);
 	void UseAI();
 	void Restart();
+	void SwitchSecondPlayerMode();
 
 };

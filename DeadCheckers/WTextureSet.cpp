@@ -62,5 +62,7 @@ WTextureSet WTextureSet::LoadFrom(std::wstring path) {
     }
     set._textures[static_cast<int>(Texture::btn_change_style)] = loaded;
 
+    
+
     return set;
 }

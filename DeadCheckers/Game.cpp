@@ -260,6 +260,11 @@ void Game::Restart()
 	Start(_boardInfo.dimension, _useAI);
 }
 
+void Game::SwitchSecondPlayerMode()
+{
+	_useAI = !_useAI;
+}
+
 AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 {
 	std::vector<BoardCords> attackCheckers;

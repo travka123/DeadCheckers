@@ -9,6 +9,7 @@
 #include "Board.h"
 #include "RestartButton.h"
 #include "ChangeStyleButton.h"
+#include "UseAIButton.h"
 
 extern RECT WndRect;
 
@@ -21,6 +22,7 @@ Board* board;
 CellIndexes* cellIndexes;
 RestartButton* restartButton;
 ChangeStyleButton* changeStyleButton;
+UseAIButton* useAIButton;
 
 void OnCreate()
 {
@@ -38,6 +40,7 @@ void OnCreate()
 
     restartButton = new RestartButton();
     changeStyleButton = new ChangeStyleButton();
+    useAIButton = new UseAIButton();
 
     game->Start(8, false);
 }

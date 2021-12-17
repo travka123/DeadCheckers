@@ -1,6 +1,6 @@
 #pragma once
 
-const int TEXTURES_COUNT = 8;
+const int TEXTURES_COUNT = 10;
 enum class Texture : short {
 	background = 0,
 	white_cell,
@@ -9,5 +9,7 @@ enum class Texture : short {
 	black_checker,
 	crown,
 	btn_restart,
-	btn_change_style
+	btn_change_style,
+	btn_set_ai,
+	btn_set_p2
 };
