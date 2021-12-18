@@ -3,6 +3,7 @@
 Rendering* Systems::_rendering;
 Game* Systems::_game;
 Input* Systems::_input;
+Controller* Systems::_controller;
 
 Rendering* Systems::GetRendering()
 {
@@ -27,4 +28,14 @@ Input* Systems::GetInput() {
 
 void Systems::SetInput(Input* input) {
 	_input = input;
+}
+
+Controller* Systems::GetController()
+{
+	return _controller;
+}
+
+void Systems::SetController(Controller* controller)
+{
+	_controller = controller;
 }

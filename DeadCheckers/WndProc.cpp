@@ -2,45 +2,38 @@
 #include <windowsx.h>
 
 #include "Systems.h"
+
 #include "WRendering.h"
 #include "Input.h"
-#include "Background.h"
-#include "CellIndexes.h"
-#include "Board.h"
-#include "RestartButton.h"
-#include "ChangeStyleButton.h"
-#include "UseAIButton.h"
+#include "WCursedController.h"
+#include "UniqueEntitiesStorage.h"
 
 extern RECT WndRect;
 
 WRendering* rendering;
 Input* input;
 Game* game;
-
-Background* background;
-Board* board;
-CellIndexes* cellIndexes;
-RestartButton* restartButton;
-ChangeStyleButton* changeStyleButton;
-UseAIButton* useAIButton;
+WCursedController* controller;
 
 void OnCreate()
 {
     rendering = new WRendering(WndRect, 50, 70);
     input = new Input();
     game = new Game();
+    controller = new WCursedController();
 
     Systems::SetRendering(rendering);
     Systems::SetInput(input);
     Systems::SetGame(game);
+    Systems::SetController(controller);
 
-    background = new Background();
-    board = new Board();
-    cellIndexes = new CellIndexes();
+    UniqueEntitiesStorage::background = new Background();
+    UniqueEntitiesStorage::board = new Board();
+    UniqueEntitiesStorage::cellIndexes = new CellIndexes();
 
-    restartButton = new RestartButton();
-    changeStyleButton = new ChangeStyleButton();
-    useAIButton = new UseAIButton();
+    UniqueEntitiesStorage::restartButton = new RestartButton();
+    UniqueEntitiesStorage::changeStyleButton = new ChangeStyleButton();
+    UniqueEntitiesStorage::useAIButton = new UseAIButton();
 
     game->Start(8, false);
 }

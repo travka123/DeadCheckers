@@ -145,6 +145,8 @@
     <ClCompile Include="CellIndexes.cpp" />
     <ClCompile Include="ChangeStyleButton.cpp" />
     <ClCompile Include="Checker.cpp" />
+    <ClCompile Include="CursedCellIndexes.cpp" />
+    <ClCompile Include="CursedEvents.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameAlgorithms.cpp" />
@@ -155,8 +157,11 @@
     <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="RestartButton.cpp" />
+    <ClCompile Include="StringCellIndexes.cpp" />
     <ClCompile Include="Systems.cpp" />
+    <ClCompile Include="UniqueEntitiesStorage.cpp" />
     <ClCompile Include="UseAIButton.cpp" />
+    <ClCompile Include="WCursedController.cpp" />
     <ClCompile Include="WPainter.cpp" />
     <ClCompile Include="Renderable.cpp" />
     <ClCompile Include="WndProc.cpp" />
@@ -171,6 +176,12 @@
     <ClInclude Include="ChangeStyleButton.h" />
     <ClInclude Include="Checker.h" />
     <ClInclude Include="Color.h" />
+    <ClInclude Include="Controller.h" />
+    <ClInclude Include="CursedCellIndexes.h" />
+    <ClInclude Include="CursedEvents.h" />
+    <ClInclude Include="StringCellIndexes.h" />
+    <ClInclude Include="UniqueEntitiesStorage.h" />
+    <ClInclude Include="WCursedController.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameAlgorithms.h" />
     <ClInclude Include="GameStructures.h" />

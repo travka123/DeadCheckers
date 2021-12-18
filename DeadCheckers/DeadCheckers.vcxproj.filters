@@ -16,6 +16,9 @@
     <Filter Include="Файлы заголовков\buttons">
       <UniqueIdentifier>{9617a876-a335-4930-80a3-f580e5b0c696}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\CellIndexes">
+      <UniqueIdentifier>{6437a18f-f0f8-4d75-86f6-64f6bc7410c1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -87,6 +90,21 @@
     <ClCompile Include="UseAIButton.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="WCursedController.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CursedEvents.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="UniqueEntitiesStorage.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="StringCellIndexes.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="CursedCellIndexes.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WTextureSet.h">
@@ -120,9 +138,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="CellIndexes.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Layout.h">
@@ -163,6 +178,27 @@
     </ClInclude>
     <ClInclude Include="UseAIButton.h">
       <Filter>Файлы заголовков\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="WCursedController.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedEvents.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="UniqueEntitiesStorage.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="CellIndexes.h">
+      <Filter>Файлы заголовков\CellIndexes</Filter>
+    </ClInclude>
+    <ClInclude Include="StringCellIndexes.h">
+      <Filter>Файлы заголовков\CellIndexes</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedCellIndexes.h">
+      <Filter>Файлы заголовков\CellIndexes</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

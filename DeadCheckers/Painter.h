@@ -17,4 +17,5 @@ public:
     virtual void CellPaint(Texture texture, int x, int y, float scale) = 0;
     virtual void PaintIndexes(wchar_t top, wchar_t bottom) = 0;
     virtual void PaintCellIn(Color color, int x, int y) = 0;
+    virtual void PaintIndexes(std::wstring top, std::wstring bottom) = 0;
 };

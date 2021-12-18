@@ -20,6 +20,7 @@ private:
 	void PrepareNextTurn();
 	void HighlightAttackCheckers();
 	void PrepareForRestart();
+	bool CanMove(const std::vector<BoardCords>& checkers);
 	AITurn UseAI(int depth, Team turnOf, Team countFor);
 
 public:
@@ -33,5 +34,5 @@ public:
 	void UseAI();
 	void Restart();
 	void SwitchSecondPlayerMode();
-
+	bool IsUsingAI();
 };

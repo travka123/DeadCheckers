@@ -6,6 +6,8 @@
 class CellIndexes : Renderable {
 public:
     CellIndexes();
-    void Render(Painter& painter);
-    bool NeedRedraw() override;
+    virtual ~CellIndexes();
+
+    virtual void Render(Painter& painter);
+    virtual bool NeedRedraw() override;
 };

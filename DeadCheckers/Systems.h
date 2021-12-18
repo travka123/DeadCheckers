@@ -3,12 +3,14 @@
 #include "Rendering.h"
 #include "Game.h"
 #include "Input.h"
+#include "Controller.h"
 
 class Systems {
 private:
 	static Rendering* _rendering;
 	static Game* _game;
 	static Input* _input;
+	static Controller* _controller;
 
 public:
 	static Rendering* GetRendering();
@@ -19,4 +21,7 @@ public:
 
 	static Input* GetInput();
 	static void SetInput(Input* input);
+
+	static Controller* GetController();
+	static void SetController(Controller* controller);
 };

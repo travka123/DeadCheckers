@@ -81,8 +81,14 @@ void WPainter::CellPaint(Texture texture, std::vector<CellRect>& cells) {
 }
 
 void WPainter::PaintIndexes(wchar_t top, wchar_t bottom) {
+    
+    HFONT hFont = CreateFont(48, 0, 0, 0, FW_DONTCARE, FALSE, TRUE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+        CLIP_DEFAULT_PRECIS, NONANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
+    HGDIOBJ hOldFont = SelectObject(_hDC, hFont);
+
     SetBkMode(_hDC, TRANSPARENT);
     SetTextColor(_hDC, BLACK_BRUSH);
+    
 
     for (int i = 0; i < 8; i++, top++, bottom++) {
         RECT rect = {
@@ -103,6 +109,49 @@ void WPainter::PaintIndexes(wchar_t top, wchar_t bottom) {
 
         DrawTextExW(_hDC, (wchar_t*)&bottom, 1, &rect, DT_CENTER | DT_SINGLELINE | DT_VCENTER, 0);
     }
+
+    SelectObject(_hDC, hOldFont);
+    DeleteObject(hFont);
+}
+
+void WPainter::PaintIndexes(std::wstring top, std::wstring bottom) {
+
+    if ((top.length() < 8) || (bottom.length() < 8)) {
+        return;
+    }
+
+    int ptop = 0;
+    int pbottom = 0;
+
+    HFONT hFont = CreateFont(48, 0, 0, 0, FW_DONTCARE, FALSE, TRUE, FALSE, DEFAULT_CHARSET, OUT_OUTLINE_PRECIS,
+        CLIP_DEFAULT_PRECIS, NONANTIALIASED_QUALITY, VARIABLE_PITCH, TEXT("Arial"));
+    HGDIOBJ hOldFont = SelectObject(_hDC, hFont);
+
+    SetBkMode(_hDC, TRANSPARENT);
+    SetTextColor(_hDC, BLACK_BRUSH);
+
+    for (int i = 0; i < 8; i++, ptop++, pbottom++) {
+        RECT rect = {
+                (LONG)(_layout.board.left + _layout.boardCellSize * i),
+                (LONG)(_layout.board.top - _layout.margin),
+                (LONG)(_layout.board.left + _layout.boardCellSize * (i + 1)),
+                (LONG)(_layout.board.top)
+        };
+
+        DrawTextExW(_hDC, (wchar_t*)&(top[ptop]), 1, &rect, DT_CENTER | DT_SINGLELINE | DT_VCENTER, 0);
+
+        rect = {
+                (LONG)(_layout.board.left - _layout.margin),
+                (LONG)(_layout.board.top + _layout.boardCellSize * i),
+                (LONG)(_layout.board.left),
+                (LONG)(_layout.board.top + _layout.boardCellSize * (i + 1))
+        };
+
+        DrawTextExW(_hDC, (wchar_t*)&(bottom[pbottom]), 1, &rect, DT_CENTER | DT_SINGLELINE | DT_VCENTER, 0);
+    }
+
+    SelectObject(_hDC, hOldFont);
+    DeleteObject(hFont);
 }
 
 void WPainter::PaintCellIn(Color color, int x, int y)
