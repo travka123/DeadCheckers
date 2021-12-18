@@ -11,6 +11,11 @@ HBITMAP WTextureSet::Get(Texture texture) {
     return _textures[static_cast<int>(texture)];
 }
 
+void WTextureSet::Set(Texture texture, HBITMAP bitmap)
+{
+    _textures[static_cast<int>(texture)] = bitmap;
+}
+
 WTextureSet WTextureSet::LoadFrom(std::wstring path) {
     WTextureSet set;
 

@@ -5,6 +5,11 @@ Background::Background() {
     RegisterRenderable(RenderLayer::background);
 }
 
+Background::~Background()
+{
+    UnregisterRenderable();
+}
+
 void Background::Render(Painter& painter) {
     painter.Paint(Texture::background, painter.GetCanvasRect());
 }

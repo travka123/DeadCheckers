@@ -14,5 +14,6 @@ private:
 public:
 	UINT GetTransparentColor();
 	HBITMAP Get(Texture texture);
+	void Set(Texture texture, HBITMAP bitmap);
 	static WTextureSet LoadFrom(std::wstring path);
 };

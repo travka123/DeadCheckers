@@ -13,11 +13,17 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Файлы заголовков\buttons">
+    <Filter Include="Файлы заголовков\Entities">
+      <UniqueIdentifier>{5b1872f8-fb59-4313-a1a8-7323a6319828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entities\Buttons">
       <UniqueIdentifier>{9617a876-a335-4930-80a3-f580e5b0c696}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Файлы заголовков\CellIndexes">
+    <Filter Include="Файлы заголовков\Entities\CellIndexes">
       <UniqueIdentifier>{6437a18f-f0f8-4d75-86f6-64f6bc7410c1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entities\Backgrounds">
+      <UniqueIdentifier>{d4c52744-4b71-424a-9c49-1a4e616fb51c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -105,6 +111,9 @@
     <ClCompile Include="CursedCellIndexes.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CursedBackground.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WTextureSet.h">
@@ -117,9 +126,6 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Renderable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Background.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Rendering.h">
@@ -171,13 +177,13 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="ChangeStyleButton.h">
-      <Filter>Файлы заголовков\buttons</Filter>
+      <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="RestartButton.h">
-      <Filter>Файлы заголовков\buttons</Filter>
+      <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="UseAIButton.h">
-      <Filter>Файлы заголовков\buttons</Filter>
+      <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
     <ClInclude Include="WCursedController.h">
       <Filter>Файлы заголовков</Filter>
@@ -192,13 +198,19 @@
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CellIndexes.h">
-      <Filter>Файлы заголовков\CellIndexes</Filter>
+      <Filter>Файлы заголовков\Entities\CellIndexes</Filter>
     </ClInclude>
     <ClInclude Include="StringCellIndexes.h">
-      <Filter>Файлы заголовков\CellIndexes</Filter>
+      <Filter>Файлы заголовков\Entities\CellIndexes</Filter>
     </ClInclude>
     <ClInclude Include="CursedCellIndexes.h">
-      <Filter>Файлы заголовков\CellIndexes</Filter>
+      <Filter>Файлы заголовков\Entities\CellIndexes</Filter>
+    </ClInclude>
+    <ClInclude Include="Background.h">
+      <Filter>Файлы заголовков\Entities\Backgrounds</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedBackground.h">
+      <Filter>Файлы заголовков\Entities\Backgrounds</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

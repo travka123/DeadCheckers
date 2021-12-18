@@ -98,6 +98,11 @@ void WRendering::SetNextStyle()
 	_invalidateCache = true;
 }
 
+WTextureSet& WRendering::GetTextureSet()
+{
+	return _textures;
+}
+
 void WRendering::ReinitCache(HDC compDC)
 {
 	int x = _clientRect.right - _clientRect.left;

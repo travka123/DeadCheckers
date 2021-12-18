@@ -18,13 +18,15 @@ WCursedController* controller;
 void OnCreate()
 {
     rendering = new WRendering(WndRect, 50, 70);
-    input = new Input();
-    game = new Game();
-    controller = new WCursedController();
-
     Systems::SetRendering(rendering);
+
+    input = new Input();
     Systems::SetInput(input);
+
+    game = new Game();
     Systems::SetGame(game);
+
+    controller = new WCursedController();
     Systems::SetController(controller);
 
     UniqueEntitiesStorage::background = new Background();

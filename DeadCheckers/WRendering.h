@@ -26,4 +26,5 @@ public:
     void SetTextures(std::wstring path);
     void SetCleintRect(RECT clientRect);
     void SetNextStyle();
+    WTextureSet& GetTextureSet();
 };

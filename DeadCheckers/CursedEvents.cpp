@@ -3,6 +3,7 @@
 #include "UniqueEntitiesStorage.h"
 #include "StringCellIndexes.h"
 #include "CursedCellIndexes.h"
+#include "CursedBackground.h"
 
 void CursedEvents::SetNormalCellIndexes()
 {
@@ -20,4 +21,10 @@ void CursedEvents::SetCursedCellIndexes()
 {
 	delete UniqueEntitiesStorage::cellIndexes;
 	UniqueEntitiesStorage::cellIndexes = new CursedCellIndexes();
+}
+
+void CursedEvents::SetCursedBackground()
+{
+	delete UniqueEntitiesStorage::background;
+	UniqueEntitiesStorage::background = new CursedBackground();
 }
