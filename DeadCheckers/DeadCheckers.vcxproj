@@ -156,10 +156,13 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Interactive.cpp" />
     <ClCompile Include="Layout.cpp" />
+    <ClCompile Include="Logic.cpp" />
     <ClCompile Include="PlayerChecker.cpp" />
+    <ClCompile Include="Processable.cpp" />
     <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
     <ClCompile Include="RestartButton.cpp" />
+    <ClCompile Include="ScreenInfector.cpp" />
     <ClCompile Include="StringCellIndexes.cpp" />
     <ClCompile Include="Systems.cpp" />
     <ClCompile Include="UniqueEntitiesStorage.cpp" />
@@ -185,6 +188,9 @@
     <ClInclude Include="CursedButton.h" />
     <ClInclude Include="CursedCellIndexes.h" />
     <ClInclude Include="CursedEvents.h" />
+    <ClInclude Include="Logic.h" />
+    <ClInclude Include="Processable.h" />
+    <ClInclude Include="ScreenInfector.h" />
     <ClInclude Include="StringCellIndexes.h" />
     <ClInclude Include="UniqueEntitiesStorage.h" />
     <ClInclude Include="WCursedController.h" />

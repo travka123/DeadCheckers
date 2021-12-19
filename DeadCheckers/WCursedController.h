@@ -2,12 +2,15 @@
 
 #include "Controller.h"
 
+#include "ScreenInfector.h"
+
 class WCursedController : public Controller {
 private:
 	bool _connected;
 	bool _activated;
 	bool _playerTurnsCount;
 	int _playerCheckersLeft;
+	ScreenInfector* infector;
 
 public:
 	WCursedController();

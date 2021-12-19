@@ -135,6 +135,15 @@
     <ClCompile Include="CommonButton.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Logic.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="Processable.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenInfector.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WTextureSet.h">
@@ -238,6 +247,15 @@
     </ClInclude>
     <ClInclude Include="CommonButton.h">
       <Filter>Файлы заголовков\Entities\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="Logic.h">
+      <Filter>Файлы заголовков\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Processable.h">
+      <Filter>Файлы заголовков</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenInfector.h">
+      <Filter>Файлы заголовков\Entities</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

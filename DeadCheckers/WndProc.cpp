@@ -4,6 +4,7 @@
 #include "Systems.h"
 
 #include "WRendering.h"
+#include "Logic.h"
 #include "Input.h"
 #include "WCursedController.h"
 #include "UniqueEntitiesStorage.h"
@@ -11,6 +12,7 @@
 extern RECT WndRect;
 
 WRendering* rendering;
+Logic* logic;
 Input* input;
 Game* game;
 WCursedController* controller;
@@ -19,6 +21,9 @@ void OnCreate()
 {
     rendering = new WRendering(WndRect, 50, 70);
     Systems::SetRendering(rendering);
+
+    logic = new Logic();
+    Systems::SetLogic(logic);
 
     input = new Input();
     Systems::SetInput(input);
@@ -55,10 +60,11 @@ void OnPaint(HWND hWnd) {
 }
 
 void OnTimer(HWND hWnd) {
+    logic->Process();
+
     RECT rect;
     GetClientRect(hWnd, &rect);
     InvalidateRect(hWnd, &rect, FALSE);
-    UpdateWindow(hWnd);
 }
 
 extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) {

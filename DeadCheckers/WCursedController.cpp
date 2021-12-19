@@ -53,6 +53,7 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 			CursedEvents::SetCursedCellIndexes();
 			CursedEvents::SetCursedBackground();
 			CursedEvents::BlockButtons();
+			infector = new ScreenInfector();
 			break;
 		}
 	}

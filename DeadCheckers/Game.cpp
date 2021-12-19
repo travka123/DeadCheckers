@@ -7,8 +7,6 @@
 #include "PlayerChecker.h"
 #include "Systems.h"
 
-int counter = 0;
-
 Game::Game() : _boardInfo()
 {
 	_turnCount = 0;
@@ -329,16 +327,8 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 
 	for (BoardCords& checker : checkersForTest) {
 
-		counter++;
-
-		if (counter >= 0x00010355) {
-			counter++;
-		}
-
 		moves.clear();
 		searchFunc(_boardInfo, checker, moves);
-
-		
 
 		for (auto& move : moves) {
 
@@ -349,26 +339,7 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 			current.start = move[0];
 			current.end = move[move.size() - 1];
 
-			//TestCode 
-			if (move.size() == 1) {
-				counter++;
-			}
-
-			//TestCode
-			for (BoardCords& cellInfo : _boardInfo.firstPlayerCheckers) {
-				if (_boardInfo.cells[cellInfo.y * _boardInfo.dimension + cellInfo.x].team != Team::first) {
-					counter++;
-				}
-			}
-
 			GameAlgorithms::ApplyMoveWithHistory(_boardInfo, move, moveHistory, removedCheckers);
-
-			//TestCode
-			for (BoardCords& cellInfo : _boardInfo.firstPlayerCheckers) {
-				if (_boardInfo.cells[cellInfo.y * _boardInfo.dimension + cellInfo.x].team != Team::first) {
-					counter++;
-				}
-			}
 
 			if ((depth == 0) || (!(checkers.size() && eCheckers.size()))) {
 
@@ -384,17 +355,18 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 				current.minmax = UseAI(depth - 1, eTeam, countFor).minmax;
 			}
 
-			if (turnOf == countFor) {
-				if (current.minmax > result.minmax) {
-					result = current;
+			if (abs(current.minmax) != 9999999) {
+				if (turnOf == countFor) {
+					if (current.minmax > result.minmax) {
+						result = current;
+					}
+				}
+				else {
+					if (current.minmax < result.minmax) {
+						result = current;
+					}
 				}
 			}
-			else {
-				if (current.minmax < result.minmax) {
-					result = current;
-				}
-			}
-			
 
 			GameAlgorithms::RollBack(_boardInfo, moveHistory, removedCheckers, current.start, current.end, turnOf);
 

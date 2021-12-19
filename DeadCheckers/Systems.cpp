@@ -1,6 +1,7 @@
 #include "Systems.h"
 
 Rendering* Systems::_rendering;
+Logic* Systems::_logic;
 Game* Systems::_game;
 Input* Systems::_input;
 Controller* Systems::_controller;
@@ -12,6 +13,16 @@ Rendering* Systems::GetRendering()
 
 void Systems::SetRendering(Rendering* rendering) {
 	_rendering = rendering;
+}
+
+Logic* Systems::GetLogic()
+{
+	return _logic;
+}
+
+void Systems::SetLogic(Logic* logic)
+{
+	_logic = logic;
 }
 
 Game* Systems::GetGame() {
