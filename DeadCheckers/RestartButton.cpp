@@ -8,6 +8,12 @@ RestartButton::RestartButton()
 	RegisterInteractive();
 }
 
+RestartButton::~RestartButton()
+{
+	UnregisterInteractive();
+	UnregisterRenderable();
+}
+
 void RestartButton::Render(Painter& painter)
 {
 	painter.Paint(Texture::btn_restart, Systems::GetRendering()->ButtonIndexToRect(0));

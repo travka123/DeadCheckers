@@ -8,6 +8,12 @@ ChangeStyleButton::ChangeStyleButton()
 	RegisterInteractive();
 }
 
+ChangeStyleButton::~ChangeStyleButton()
+{
+	UnregisterInteractive();
+	UnregisterRenderable();
+}
+
 void ChangeStyleButton::Render(Painter& painter)
 {
 	painter.Paint(Texture::btn_change_style, Systems::GetRendering()->ButtonIndexToRect(1));

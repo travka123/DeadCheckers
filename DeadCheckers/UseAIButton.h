@@ -10,6 +10,7 @@ private:
 
 public:
 	UseAIButton();
+	virtual ~UseAIButton();
 
 	void Render(Painter& painter) override;
 	bool NeedRedraw() override;

@@ -3,7 +3,7 @@
 #include "RenderLayer.h"
 
 WRendering::WRendering(RECT clientRect, float margin, float menuWidth) {
-	_textures = WTextureSet::LoadFrom(_styles[0]);
+	_textures.LoadFrom(_styles[0]);
 	_currentStyle = 0;
 
 	_clientRect = clientRect;
@@ -80,7 +80,7 @@ void WRendering::Render(HDC hDC) {
 }
 
 void WRendering::SetTextures(std::wstring path) {
-	_textures = WTextureSet::LoadFrom(path);
+	_textures.LoadFrom(path);
 	memset(_layerNeedRedraw, true, sizeof(_layerNeedRedraw));
 }
 
@@ -94,7 +94,7 @@ void WRendering::SetCleintRect(RECT clientRect)
 void WRendering::SetNextStyle()
 {
 	_currentStyle = (_currentStyle + 1) % _styles.size();
-	_textures = WTextureSet::LoadFrom(_styles[_currentStyle]);
+	_textures.LoadFrom(_styles[_currentStyle]);
 	_invalidateCache = true;
 }
 

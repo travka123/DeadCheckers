@@ -146,6 +146,7 @@
     <ClCompile Include="ChangeStyleButton.cpp" />
     <ClCompile Include="Checker.cpp" />
     <ClCompile Include="CursedBackground.cpp" />
+    <ClCompile Include="CursedButton.cpp" />
     <ClCompile Include="CursedCellIndexes.cpp" />
     <ClCompile Include="CursedEvents.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="CursedBackground.h" />
+    <ClInclude Include="CursedButton.h" />
     <ClInclude Include="CursedCellIndexes.h" />
     <ClInclude Include="CursedEvents.h" />
     <ClInclude Include="StringCellIndexes.h" />

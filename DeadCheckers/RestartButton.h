@@ -6,6 +6,7 @@
 class RestartButton : public Renderable, public Interactive {
 public:
 	RestartButton();
+	virtual ~RestartButton();
 
 	void Render(Painter& painter) override;
 	bool NeedRedraw() override;

@@ -17,6 +17,12 @@ void CursedEvents::SetWarningCellIndexes()
 	UniqueEntitiesStorage::cellIndexes = new StringCellIndexes(L"ABCDSTOP", L"12345678");
 }
 
+void CursedEvents::SetLastWarningCellIndexes()
+{
+	delete UniqueEntitiesStorage::cellIndexes;
+	UniqueEntitiesStorage::cellIndexes = new StringCellIndexes(L"STOPSTOP", L"STOPSTOP");
+}
+
 void CursedEvents::SetCursedCellIndexes()
 {
 	delete UniqueEntitiesStorage::cellIndexes;

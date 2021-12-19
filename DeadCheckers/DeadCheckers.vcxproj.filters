@@ -25,6 +25,21 @@
     <Filter Include="Файлы заголовков\Entities\Backgrounds">
       <UniqueIdentifier>{d4c52744-4b71-424a-9c49-1a4e616fb51c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Systems">
+      <UniqueIdentifier>{13245786-ba55-4a54-9c2f-22b04be1af31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Systems\Rendering">
+      <UniqueIdentifier>{0e6fc62d-7704-4263-8a59-acb4be03d9ad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Systems\Controller">
+      <UniqueIdentifier>{23316545-7743-43cb-8d1d-ef7729d0ed18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entities\Checkers">
+      <UniqueIdentifier>{aa92a118-58d6-441c-b429-c54d59aed42f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Systems\Rendering\Structures">
+      <UniqueIdentifier>{481d2978-1b22-48cd-bab9-fd923d60ad14}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -53,9 +68,6 @@
     </ClCompile>
     <ClCompile Include="WTextureSet.cpp">
       <Filter>Исходные файлы</Filter>
-    </ClCompile>
-    <ClCompile Include="Rects.h">
-      <Filter>Файлы заголовков</Filter>
     </ClCompile>
     <ClCompile Include="Rendering.cpp">
       <Filter>Исходные файлы</Filter>
@@ -114,6 +126,12 @@
     <ClCompile Include="CursedBackground.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="Rects.h">
+      <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
+    </ClCompile>
+    <ClCompile Include="CursedButton.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WTextureSet.h">
@@ -128,46 +146,16 @@
     <ClInclude Include="Renderable.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Rendering.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="WRendering.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Systems.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="RenderLayer.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="Board.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Layout.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Checker.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="Interactive.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerChecker.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="CellHighlight.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="GameAlgorithms.h">
@@ -185,16 +173,7 @@
     <ClInclude Include="UseAIButton.h">
       <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
-    <ClInclude Include="WCursedController.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="CursedEvents.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="UniqueEntitiesStorage.h">
       <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CellIndexes.h">
@@ -211,6 +190,48 @@
     </ClInclude>
     <ClInclude Include="CursedBackground.h">
       <Filter>Файлы заголовков\Entities\Backgrounds</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Файлы заголовков\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Systems.h">
+      <Filter>Файлы заголовков\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="UniqueEntitiesStorage.h">
+      <Filter>Файлы заголовков\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Файлы заголовков\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="Rendering.h">
+      <Filter>Файлы заголовков\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="WRendering.h">
+      <Filter>Файлы заголовков\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>Файлы заголовков\Systems\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="WCursedController.h">
+      <Filter>Файлы заголовков\Systems\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Checker.h">
+      <Filter>Файлы заголовков\Entities\Checkers</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerChecker.h">
+      <Filter>Файлы заголовков\Entities\Checkers</Filter>
+    </ClInclude>
+    <ClInclude Include="RenderLayer.h">
+      <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Layout.h">
+      <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedButton.h">
+      <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,6 +8,12 @@ UseAIButton::UseAIButton()
 	RegisterInteractive();
 }
 
+UseAIButton::~UseAIButton()
+{
+	UnregisterInteractive();
+	UnregisterRenderable();
+}
+
 void UseAIButton::Render(Painter& painter)
 {
 	if (_useAI) {

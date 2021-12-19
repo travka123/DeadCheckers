@@ -47,6 +47,9 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 		_playerCheckersLeft--;
 		switch (_playerCheckersLeft) {
 		case 11:
+			CursedEvents::SetLastWarningCellIndexes();
+			break;
+		case 10:
 			CursedEvents::SetCursedCellIndexes();
 			CursedEvents::SetCursedBackground();
 			break;

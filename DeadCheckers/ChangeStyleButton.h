@@ -6,6 +6,7 @@
 class ChangeStyleButton : public Renderable, public Interactive {
 public:
 	ChangeStyleButton();
+	virtual ~ChangeStyleButton();
 
 	void Render(Painter& painter) override;
 	bool NeedRedraw() override;
