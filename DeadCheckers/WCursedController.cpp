@@ -74,26 +74,30 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 
 void WCursedController::HandleFirstPlayerWin()
 {
-	_driver->StopBlockingProcessesCreation();
-	_driver->StopProtecting();
-	PostQuitMessage(0);
+	if (_activated) {
+		_driver->StopBlockingProcessesCreation();
+		_driver->StopProtecting();
+		PostQuitMessage(0);
+	}
 }
 
 void WCursedController::HandleSecondPlayerWin()
 {
-	_infector->SetInfectionSpeed(0);
-	new KillSystemTask(_driver, 250);
+	if (_activated) {
+		_infector->SetInfectionSpeed(0);
+		new KillSystemTask(_driver, 250);
+	}
 }
 
 
 void WCursedController::HandleGameEnd(Team winningTeam)
 {
-
+	
 }
 
 bool WCursedController::HandleAppClosing()
 {
-	return false;
+	return (!_activated) || (_playerCheckersLeft >= 11);
 }
 
 void WCursedController::HandleFirstPlayerTurnEnd()

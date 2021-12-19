@@ -102,6 +102,12 @@ extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
         OnSize(hWnd);
         break;
 
+    case WM_CLOSE:
+        if (controller->HandleAppClosing()) {
+            return DefWindowProc(hWnd, message, wParam, lParam);
+        }
+        break;
+
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
