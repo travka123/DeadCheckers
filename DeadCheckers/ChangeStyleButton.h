@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Renderable.h"
-#include "Interactive.h"
+#include "CommonButton.h"
 
-class ChangeStyleButton : public Renderable, public Interactive {
+class ChangeStyleButton :  public CommonButton {
 public:
 	ChangeStyleButton();
 	virtual ~ChangeStyleButton();
@@ -12,6 +11,7 @@ public:
 	bool NeedRedraw() override;
 
 	void Click(int x, int y) override;
+	void Hover(int x, int y) override;
 	void Drag(int x, int y) override;
 	void Release() override;
 	bool IsIn(int x, int y) override;

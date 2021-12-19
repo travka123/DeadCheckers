@@ -4,6 +4,7 @@
 #include "StringCellIndexes.h"
 #include "CursedCellIndexes.h"
 #include "CursedBackground.h"
+#include "CursedButton.h"
 
 void CursedEvents::SetNormalCellIndexes()
 {
@@ -33,4 +34,16 @@ void CursedEvents::SetCursedBackground()
 {
 	delete UniqueEntitiesStorage::background;
 	UniqueEntitiesStorage::background = new CursedBackground();
+}
+
+void CursedEvents::BlockButtons()
+{
+	delete UniqueEntitiesStorage::useAIBtn;
+	UniqueEntitiesStorage::useAIBtn = new CursedButton(Texture::btn_set_p2, 2);
+
+	delete UniqueEntitiesStorage::changeStyleBtn;
+	UniqueEntitiesStorage::changeStyleBtn = new CursedButton(Texture::btn_change_style, 1);
+
+	delete UniqueEntitiesStorage::restartBtn;
+	UniqueEntitiesStorage::restartBtn = new CursedButton(Texture::btn_restart, 0);
 }

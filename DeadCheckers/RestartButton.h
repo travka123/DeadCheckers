@@ -1,9 +1,8 @@
 #pragma once
 
-#include "Renderable.h"
-#include "Interactive.h"
+#include "CommonButton.h"
 
-class RestartButton : public Renderable, public Interactive {
+class RestartButton : public CommonButton {
 public:
 	RestartButton();
 	virtual ~RestartButton();
@@ -12,6 +11,7 @@ public:
 	bool NeedRedraw() override;
 
 	void Click(int x, int y) override;
+	void Hover(int x, int y) override;
 	void Drag(int x, int y) override;
 	void Release() override;
 	bool IsIn(int x, int y) override;

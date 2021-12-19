@@ -29,6 +29,10 @@ void RestartButton::Click(int x, int y)
 	Systems::GetGame()->Restart();
 }
 
+void RestartButton::Hover(int x, int y)
+{
+}
+
 void RestartButton::Drag(int x, int y)
 {
 }

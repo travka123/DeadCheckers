@@ -33,9 +33,9 @@ void OnCreate()
     UniqueEntitiesStorage::board = new Board();
     UniqueEntitiesStorage::cellIndexes = new CellIndexes();
 
-    UniqueEntitiesStorage::restartButton = new RestartButton();
-    UniqueEntitiesStorage::changeStyleButton = new ChangeStyleButton();
-    UniqueEntitiesStorage::useAIButton = new UseAIButton();
+    UniqueEntitiesStorage::restartBtn = new RestartButton();
+    UniqueEntitiesStorage::changeStyleBtn = new ChangeStyleButton();
+    UniqueEntitiesStorage::useAIBtn = new UseAIButton();
 
     game->Start(8, false);
 }

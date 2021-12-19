@@ -6,4 +6,5 @@ namespace CursedEvents {
 	void SetLastWarningCellIndexes();
 	void SetCursedCellIndexes();
 	void SetCursedBackground();
+	void BlockButtons();
 }

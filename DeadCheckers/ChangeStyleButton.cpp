@@ -29,6 +29,10 @@ void ChangeStyleButton::Click(int x, int y)
 	Systems::GetRendering()->SetNextStyle();
 }
 
+void ChangeStyleButton::Hover(int x, int y)
+{
+}
+
 void ChangeStyleButton::Drag(int x, int y) { }
 
 void ChangeStyleButton::Release() { }

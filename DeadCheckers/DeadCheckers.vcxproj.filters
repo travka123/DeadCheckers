@@ -132,6 +132,9 @@
     <ClCompile Include="CursedButton.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="CommonButton.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WTextureSet.h">
@@ -231,6 +234,9 @@
       <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
     </ClInclude>
     <ClInclude Include="CursedButton.h">
+      <Filter>Файлы заголовков\Entities\Buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonButton.h">
       <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
   </ItemGroup>

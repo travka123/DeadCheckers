@@ -37,6 +37,10 @@ void UseAIButton::Click(int x, int y)
 	_needRedraw = true;
 }
 
+void UseAIButton::Hover(int x, int y)
+{
+}
+
 void UseAIButton::Drag(int x, int y)
 {
 }

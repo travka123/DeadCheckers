@@ -22,6 +22,13 @@ void Input::ProcessHover(int x, int y)
 	if (_selected != nullptr) {
 		_selected->Drag(x, y);
 	}
+	else {
+		for (Interactive* entity : _entities) {
+			if (entity->IsIn(x, y)) {
+				entity->Hover(x, y);
+			}
+		}
+	}
 }
 
 void Input::ProcessClick(int x, int y)

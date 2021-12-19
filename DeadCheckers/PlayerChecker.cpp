@@ -56,6 +56,10 @@ void PlayerChecker::Click(int x, int y)
 	}
 }
 
+void PlayerChecker::Hover(int x, int y)
+{
+}
+
 void PlayerChecker::Drag(int x, int y)
 {
 	int lateralEnlargement = _size * 0.25 / 1.25 / 2;

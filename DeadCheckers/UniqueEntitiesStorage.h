@@ -3,6 +3,7 @@
 #include "Background.h"
 #include "CellIndexes.h"
 #include "Board.h"
+#include "CommonButton.h"
 #include "RestartButton.h"
 #include "ChangeStyleButton.h"
 #include "UseAIButton.h"
@@ -12,7 +13,8 @@ public:
 	static Background* background;
 	static Board* board;
 	static CellIndexes* cellIndexes;
-	static RestartButton* restartButton;
-	static ChangeStyleButton* changeStyleButton;
-	static UseAIButton* useAIButton;
+
+	static CommonButton* restartBtn;
+	static CommonButton* changeStyleBtn;
+	static CommonButton* useAIBtn;
 };

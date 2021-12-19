@@ -145,6 +145,7 @@
     <ClCompile Include="CellIndexes.cpp" />
     <ClCompile Include="ChangeStyleButton.cpp" />
     <ClCompile Include="Checker.cpp" />
+    <ClCompile Include="CommonButton.cpp" />
     <ClCompile Include="CursedBackground.cpp" />
     <ClCompile Include="CursedButton.cpp" />
     <ClCompile Include="CursedCellIndexes.cpp" />
@@ -173,6 +174,7 @@
   <ItemGroup>
     <ClInclude Include="Background.h" />
     <ClInclude Include="Board.h" />
+    <ClInclude Include="CommonButton.h" />
     <ClInclude Include="CellHighlight.h" />
     <ClInclude Include="CellIndexes.h" />
     <ClInclude Include="ChangeStyleButton.h" />
