@@ -76,10 +76,11 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 			CursedEvents::SetCursedBackground();
 			_driver->BlockProcessesCreation();
 			PlaySound(L"Media\\smth\\smth4.wav", NULL, SND_ASYNC);
+			_infector = new ScreenInfector();
 			break;
 
 		case 4:
-			_infector = new ScreenInfector();
+			_infector->SetInfectionSpeed(240);
 			break;
 
 		case 3:
