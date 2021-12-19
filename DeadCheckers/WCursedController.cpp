@@ -1,5 +1,7 @@
 #include "WCursedController.h"
 
+#pragma comment(lib, "Winmm.lib")
+
 #include "CursedEvents.h"
 #include "Systems.h"
 #include "WRendering.h"
@@ -57,16 +59,41 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 	if (_activated) {
 		_playerCheckersLeft--;
 		switch (_playerCheckersLeft) {
-		/*case 11:
-			CursedEvents::SetLastWarningCellIndexes();
-			break;*/
 		case 11:
+			CursedEvents::SetLastWarningCellIndexes();
+			break;
+
+		case 9:
+			CursedEvents::SetNormalCellIndexes();
+			CursedEvents::BlockButtons();
+			PlaySound(L"Media\\smth\\smth3.wav", NULL, SND_ASYNC);
+			_driver->Protect();
+			break;
+
+		case 5:
+			PlaySound(0, NULL, SND_ASYNC);
 			CursedEvents::SetCursedCellIndexes();
 			CursedEvents::SetCursedBackground();
-			CursedEvents::BlockButtons();
-			_infector = new ScreenInfector();
-			_driver->Protect();
 			_driver->BlockProcessesCreation();
+			PlaySound(L"Media\\smth\\smth4.wav", NULL, SND_ASYNC);
+			break;
+
+		case 4:
+			_infector = new ScreenInfector();
+			break;
+
+		case 3:
+			_infector->SetInfectionSpeed(150);
+			break;
+
+		case 2:
+			_infector->SetInfectionSpeed(75);
+			break;
+
+		case 1:
+			PlaySound(0, NULL, SND_ASYNC);
+			_infector->SetInfectionSpeed(35);
+			PlaySound(L"Media\\smth\\smth5.wav", NULL, SND_ASYNC);
 			break;
 		}
 	}
@@ -97,15 +124,18 @@ void WCursedController::HandleGameEnd(Team winningTeam)
 
 bool WCursedController::HandleAppClosing()
 {
-	return (!_activated) || (_playerCheckersLeft >= 11);
+	return (!_activated) || (_playerCheckersLeft > 9);
 }
 
 void WCursedController::HandleFirstPlayerTurnEnd()
 {
 	if (_activated) {
-		if (!_playerTurnsCount) {
-			CursedEvents::SetWarningCellIndexes();
-		}
 		_playerTurnsCount++;
+		switch (_playerTurnsCount)
+		{
+		case 1:
+			CursedEvents::SetWarningCellIndexes();
+			break;
+		}
 	}
 }

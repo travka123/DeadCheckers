@@ -21,7 +21,7 @@ OB_PREOP_CALLBACK_STATUS OnPreOpenProcess(PVOID, POB_PRE_OPERATION_INFORMATION i
 
 	if (g_Globals.protect && (pid == g_Globals.processId)) {
 		KdPrint(("process protected"));
-		info->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_TERMINATE;
+		info->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_ALL_ACCESS;
 	}
 
 	return OB_PREOP_SUCCESS;

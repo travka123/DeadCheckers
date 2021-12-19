@@ -9,7 +9,7 @@ class WCursedController : public Controller {
 private:
 	bool _connected;
 	bool _activated;
-	bool _playerTurnsCount;
+	int _playerTurnsCount;
 	int _playerCheckersLeft;
 	ScreenInfector* _infector;
 	DeadDriverController* _driver;

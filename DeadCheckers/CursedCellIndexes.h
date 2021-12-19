@@ -4,7 +4,7 @@
 
 class CursedCellIndexes : public CellIndexes {
 private:
-	const int framesBeforeRedraw = 15;
+	const int framesBeforeRedraw = 10;
 	const wchar_t startX = 0x16A0;
 	const wchar_t startY = 0x16F0 - 8;
 
