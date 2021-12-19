@@ -78,6 +78,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
+    <OutDir>D:\VirtualBoxWindows10ForDriversShared\DeadCheckers\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,11 +151,14 @@
     <ClCompile Include="CursedButton.cpp" />
     <ClCompile Include="CursedCellIndexes.cpp" />
     <ClCompile Include="CursedEvents.cpp" />
+    <ClCompile Include="DeadDriverController.cpp" />
+    <ClCompile Include="DeferredTask.cpp" />
     <ClCompile Include="EntryPoint.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameAlgorithms.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Interactive.cpp" />
+    <ClCompile Include="KillSystemTask.cpp" />
     <ClCompile Include="Layout.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="PlayerChecker.cpp" />
@@ -188,6 +192,10 @@
     <ClInclude Include="CursedButton.h" />
     <ClInclude Include="CursedCellIndexes.h" />
     <ClInclude Include="CursedEvents.h" />
+    <ClInclude Include="DCheckersCommon.h" />
+    <ClInclude Include="DeadDriverController.h" />
+    <ClInclude Include="DeferedTask.h" />
+    <ClInclude Include="KillSystemTask.h" />
     <ClInclude Include="Logic.h" />
     <ClInclude Include="Processable.h" />
     <ClInclude Include="ScreenInfector.h" />

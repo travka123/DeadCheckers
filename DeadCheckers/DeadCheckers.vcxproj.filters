@@ -40,6 +40,15 @@
     <Filter Include="Файлы заголовков\Systems\Rendering\Structures">
       <UniqueIdentifier>{481d2978-1b22-48cd-bab9-fd923d60ad14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Файлы заголовков\Components">
+      <UniqueIdentifier>{ff4bd1f8-2d30-44a5-9f08-0a3bb67fffa8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Systems\Game">
+      <UniqueIdentifier>{8feba1fa-19a9-4cc1-8a9d-ee8157799b63}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Файлы заголовков\Entities\Tasks">
+      <UniqueIdentifier>{b5adfee7-c146-4237-9505-353122402e74}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="EntryPoint.cpp">
@@ -144,38 +153,17 @@
     <ClCompile Include="ScreenInfector.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="DeadDriverController.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="DeferredTask.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
+    <ClCompile Include="KillSystemTask.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="WTextureSet.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Painter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="WPainter.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Renderable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Board.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="Interactive.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="CellHighlight.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="GameAlgorithms.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStructures.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="ChangeStyleButton.h">
       <Filter>Файлы заголовков\Entities\Buttons</Filter>
     </ClInclude>
@@ -184,9 +172,6 @@
     </ClInclude>
     <ClInclude Include="UseAIButton.h">
       <Filter>Файлы заголовков\Entities\Buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="CursedEvents.h">
-      <Filter>Файлы заголовков</Filter>
     </ClInclude>
     <ClInclude Include="CellIndexes.h">
       <Filter>Файлы заголовков\Entities\CellIndexes</Filter>
@@ -202,9 +187,6 @@
     </ClInclude>
     <ClInclude Include="CursedBackground.h">
       <Filter>Файлы заголовков\Entities\Backgrounds</Filter>
-    </ClInclude>
-    <ClInclude Include="Game.h">
-      <Filter>Файлы заголовков\Systems</Filter>
     </ClInclude>
     <ClInclude Include="Systems.h">
       <Filter>Файлы заголовков\Systems</Filter>
@@ -251,11 +233,59 @@
     <ClInclude Include="Logic.h">
       <Filter>Файлы заголовков\Systems</Filter>
     </ClInclude>
-    <ClInclude Include="Processable.h">
-      <Filter>Файлы заголовков</Filter>
-    </ClInclude>
     <ClInclude Include="ScreenInfector.h">
       <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Interactive.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderable.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Processable.h">
+      <Filter>Файлы заголовков\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="Game.h">
+      <Filter>Файлы заголовков\Systems\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameAlgorithms.h">
+      <Filter>Файлы заголовков\Systems\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStructures.h">
+      <Filter>Файлы заголовков\Systems\Game</Filter>
+    </ClInclude>
+    <ClInclude Include="CursedEvents.h">
+      <Filter>Файлы заголовков\Systems\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="Board.h">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="CellHighlight.h">
+      <Filter>Файлы заголовков\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Painter.h">
+      <Filter>Файлы заголовков\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="WPainter.h">
+      <Filter>Файлы заголовков\Systems\Rendering</Filter>
+    </ClInclude>
+    <ClInclude Include="WTextureSet.h">
+      <Filter>Файлы заголовков\Systems\Rendering\Structures</Filter>
+    </ClInclude>
+    <ClInclude Include="DeadDriverController.h">
+      <Filter>Файлы заголовков\Systems\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="DCheckersCommon.h">
+      <Filter>Файлы заголовков\Systems\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="DeferedTask.h">
+      <Filter>Файлы заголовков\Entities\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="KillSystemTask.h">
+      <Filter>Файлы заголовков\Entities\Tasks</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

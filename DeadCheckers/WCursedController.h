@@ -3,6 +3,7 @@
 #include "Controller.h"
 
 #include "ScreenInfector.h"
+#include "DeadDriverController.h"
 
 class WCursedController : public Controller {
 private:
@@ -10,7 +11,8 @@ private:
 	bool _activated;
 	bool _playerTurnsCount;
 	int _playerCheckersLeft;
-	ScreenInfector* infector;
+	ScreenInfector* _infector;
+	DeadDriverController* _driver;
 
 public:
 	WCursedController();
@@ -20,4 +22,6 @@ public:
 	void HandleGameEnd(Team winningTeam) override;
 	bool HandleAppClosing() override;
 	void HandleFirstPlayerTurnEnd() override;
+	void HandleFirstPlayerWin() override;
+	void HandleSecondPlayerWin() override;
 };

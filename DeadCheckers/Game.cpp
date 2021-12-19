@@ -213,7 +213,12 @@ void Game::TryMakeMove(int x, int y, int nextX, int nextY)
 
 			auto& checkers = _turnOf == Team::first ? _boardInfo.firstPlayerCheckers : _boardInfo.secondPlayerCheckers;
 			if ((!checkers.size()) || (!CanMove(checkers))) {
-				return;
+				if (_turnOf == Team::second) {
+					controller->HandleFirstPlayerWin();
+				}
+				else {
+					controller->HandleSecondPlayerWin();
+				}
 			}
 
 			if (_useAI && (_turnOf == Team::second)) {
@@ -319,6 +324,7 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 
 	if (turnOf == countFor) {
 		result.minmax = -9999999;
+		//result.minmax = 9999999;
 	}
 	else {
 		result.minmax = 9999999;
@@ -358,6 +364,7 @@ AITurn Game::UseAI(int depth, Team turnOf, Team countFor)
 			if (abs(current.minmax) != 9999999) {
 				if (turnOf == countFor) {
 					if (current.minmax > result.minmax) {
+					//if (current.minmax < result.minmax) {
 						result = current;
 					}
 				}

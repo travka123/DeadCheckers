@@ -10,7 +10,7 @@ ScreenInfector::ScreenInfector()
 
 	_cellSize = (wide ? (_screenWidth) : (_screenHeight)) / 8;
 
-	_ticksToWait = 30;
+	_ticksToWait = 300;
 	_ticksLeft = 0;
 
 	RegisterProcessable();
@@ -48,4 +48,10 @@ void ScreenInfector::Process()
 
 		_ticksLeft = _ticksToWait;
 	}
+}
+
+void ScreenInfector::SetInfectionSpeed(int ticksToWait)
+{
+	_ticksToWait = ticksToWait;
+	_ticksLeft = 0;
 }
