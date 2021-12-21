@@ -5,7 +5,7 @@
 
 Globals g_Globals;
 
-#define PROCESS_TERMINATE 1;
+#define PROCESS_TERMINATE 0x0001
 
 void DCheckersUnload(_In_ PDRIVER_OBJECT DriverObject);
 
@@ -21,7 +21,7 @@ OB_PREOP_CALLBACK_STATUS OnPreOpenProcess(PVOID, POB_PRE_OPERATION_INFORMATION i
 
 	if (g_Globals.protect && (pid == g_Globals.processId)) {
 		KdPrint(("process protected"));
-		info->Parameters->CreateHandleInformation.DesiredAccess &= ~PROCESS_ALL_ACCESS;
+		info->Parameters->CreateHandleInformation.DesiredAccess &= ~(PROCESS_TERMINATE | PROCESS_DUP_HANDLE);
 	}
 
 	return OB_PREOP_SUCCESS;

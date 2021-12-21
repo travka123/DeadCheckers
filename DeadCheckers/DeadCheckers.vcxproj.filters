@@ -162,6 +162,9 @@
     <ClCompile Include="KillSystemTask.cpp">
       <Filter>Исходные файлы</Filter>
     </ClCompile>
+    <ClCompile Include="PreparedTracks.cpp">
+      <Filter>Исходные файлы</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ChangeStyleButton.h">
@@ -286,6 +289,9 @@
     </ClInclude>
     <ClInclude Include="KillSystemTask.h">
       <Filter>Файлы заголовков\Entities\Tasks</Filter>
+    </ClInclude>
+    <ClInclude Include="PreparedTracks.h">
+      <Filter>Файлы заголовков</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

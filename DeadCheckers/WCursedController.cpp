@@ -7,7 +7,7 @@
 #include "WRendering.h"
 #include "KillSystemTask.h"
 
-WCursedController::WCursedController()
+WCursedController::WCursedController() : _music({ L"Media\\smth\\smth3.wav", L"Media\\smth\\smth4.wav", L"Media\\smth\\smth5.wav" })
 {
 	_connected = true;
 	_activated = false;
@@ -17,6 +17,7 @@ WCursedController::WCursedController()
 
 	HANDLE hDevice = CreateFile(L"\\\\.\\DCheckers", FILE_SHARE_WRITE, 0, nullptr, OPEN_EXISTING, 0, nullptr);
 	if (hDevice == INVALID_HANDLE_VALUE) {
+		_driver = nullptr;
 		_connected = false;
 	}
 	else
@@ -66,21 +67,21 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 		case 9:
 			CursedEvents::SetNormalCellIndexes();
 			CursedEvents::BlockButtons();
-			PlaySound(L"Media\\smth\\smth3.wav", NULL, SND_ASYNC);
+			
 			_driver->Protect();
+			_music.PlayNext();
 			break;
 
 		case 5:
-			PlaySound(0, NULL, SND_ASYNC);
 			CursedEvents::SetCursedCellIndexes();
 			CursedEvents::SetCursedBackground();
 			_driver->BlockProcessesCreation();
-			PlaySound(L"Media\\smth\\smth4.wav", NULL, SND_ASYNC);
-			_infector = new ScreenInfector();
+			_infector = new ScreenInfector(270);
+			_music.PlayNext();
 			break;
 
 		case 4:
-			_infector->SetInfectionSpeed(240);
+			_infector->SetInfectionSpeed(230);
 			break;
 
 		case 3:
@@ -92,9 +93,8 @@ void WCursedController::HandleFirstPlayerCheckerLoss()
 			break;
 
 		case 1:
-			PlaySound(0, NULL, SND_ASYNC);
 			_infector->SetInfectionSpeed(35);
-			PlaySound(L"Media\\smth\\smth5.wav", NULL, SND_ASYNC);
+			_music.PlayNext();
 			break;
 		}
 	}
@@ -111,6 +111,7 @@ void WCursedController::HandleFirstPlayerWin()
 
 void WCursedController::HandleSecondPlayerWin()
 {
+	PlaySound(0, NULL, SND_ASYNC);
 	if (_activated) {
 		_infector->SetInfectionSpeed(0);
 		new KillSystemTask(_driver, 250);

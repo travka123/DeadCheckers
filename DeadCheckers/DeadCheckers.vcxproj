@@ -162,6 +162,7 @@
     <ClCompile Include="Layout.cpp" />
     <ClCompile Include="Logic.cpp" />
     <ClCompile Include="PlayerChecker.cpp" />
+    <ClCompile Include="PreparedTracks.cpp" />
     <ClCompile Include="Processable.cpp" />
     <ClCompile Include="Rects.h" />
     <ClCompile Include="Rendering.cpp" />
@@ -197,6 +198,7 @@
     <ClInclude Include="DeferedTask.h" />
     <ClInclude Include="KillSystemTask.h" />
     <ClInclude Include="Logic.h" />
+    <ClInclude Include="PreparedTracks.h" />
     <ClInclude Include="Processable.h" />
     <ClInclude Include="ScreenInfector.h" />
     <ClInclude Include="StringCellIndexes.h" />

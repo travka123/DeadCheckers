@@ -110,30 +110,6 @@ extern LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM l
 		}
 		break;
 
-	/*case WM_QUIT:
-		if (controller->HandleAppClosing()) {
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
-		break;*/
-
-	/*case WM_SYSCOMMAND:
-		if (controller->HandleAppClosing()) {
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
-		break;*/
-
-	/*case WM_QUERYENDSESSION:
-		if (controller->HandleAppClosing()) {
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
-		break;*/
-
-	/*case WM_ENDSESSION:
-		if (controller->HandleAppClosing()) {
-			return DefWindowProc(hWnd, message, wParam, lParam);
-		}
-		break;*/
-
 	default:
 		return DefWindowProc(hWnd, message, wParam, lParam);
 	}

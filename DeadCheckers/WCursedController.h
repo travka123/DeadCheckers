@@ -4,6 +4,7 @@
 
 #include "ScreenInfector.h"
 #include "DeadDriverController.h"
+#include "PreparedTracks.h"
 
 class WCursedController : public Controller {
 private:
@@ -13,6 +14,8 @@ private:
 	int _playerCheckersLeft;
 	ScreenInfector* _infector;
 	DeadDriverController* _driver;
+	PreparedTracks _music;
+	
 
 public:
 	WCursedController();

@@ -15,7 +15,7 @@ private:
 	int _ticksLeft;
 
 public:
-	ScreenInfector();
+	ScreenInfector(int ticksToWait);
 	virtual ~ScreenInfector();
 
 	void Process() override;
